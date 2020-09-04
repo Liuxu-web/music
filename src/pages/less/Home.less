@@ -1,0 +1,317 @@
+.width-height(@w,@h) {
+    width: @w;
+    height: @h;
+}
+.Home {
+    .width-height(100%,100%);
+    min-width: 1540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    // 头
+    > header {
+        border-bottom: 2px solid #c62f2f;
+        .width-height(100%, 50px);
+        box-sizing: border-box;
+        background: #c62f2f;
+        color: #ffffff;
+        padding: 0 16px;
+        display: flex;
+        justify-content: space-between;
+        .h-lf {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            h1 {
+                cursor: pointer;
+                font-size: 20px;
+            }
+            .n-lf {
+                .width-height(281px, 22px);
+                position: relative;
+                padding-left: 65px;
+                display: flex;
+                justify-content: space-between;
+                // 按钮
+                .btn {
+                    box-sizing: border-box;
+                    border: 1px solid#a82828;
+                    .width-height(53px, 22px);
+                    border-radius: 2px;
+                    overflow: hidden;
+                    display: flex;
+                    span {
+                        background-color: #a82828;
+                        width: 1px;
+                    }
+                    button {
+                        color: white;
+                        background: transparent;
+                        outline: none;
+                        border: none;
+                        padding: 0;
+                        flex: 1;
+                    }
+                }
+                input {
+                    background-color: #a82828;
+                    .width-height(218px, 100%);
+                    border-radius: 15px;
+                    text-indent: 16px;
+                    color: white;
+                    outline: none;
+                    border: none;
+                    padding: 0;
+                }
+                input::-webkit-input-placeholder {
+                    /* WebKit browsers */
+                    font-size: 12px;
+                    color: #c77373;
+                }
+                input:-moz-placeholder {
+                    /* Mozilla Firefox 4 to 18 */
+                    font-size: 12px;
+                    color: #c77373;
+                }
+                input::-moz-placeholder {
+                    /* Mozilla Firefox 19+ */
+                    font-size: 12px;
+                    color: #c77373;
+                }
+                input:-ms-input-placeholder {
+                    /* Internet Explorer 10+ */
+                    font-size: 12px;
+                    color: #c77373;
+                }
+                > span {
+                    position: absolute;
+                    color: #c77373;
+                    transform: translateY(-50%);
+                    top: 50%;
+                    right: 10px;
+                }
+            }
+        }
+        .h-rg {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            > ul {
+                height: 60%;
+                display: flex;
+                align-items: center;
+                > img {
+                    .width-height(24px, 24px);
+                    border-radius: 50%;
+                }
+                > li {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                    color: #e29595;
+                    padding: 0 12px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    &:hover {
+                        color: white;
+                    }
+                    > i {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+    // 主体
+    > main {
+        flex: 1;
+        display: flex;
+        > aside {
+            .width-height(200px, 100%);
+            box-sizing: border-box;
+            border-right: 1px solid #e1e1e2;
+            background: #f5f5f7;
+            > h1 {
+                .width-height(auto, 32px);
+                display: flex;
+                align-items: center;
+                color: #7d7d7d;
+                padding-left: 10px;
+                font-size: 12px;
+            }
+            > a {
+                box-sizing: border-box;
+                padding-left: 20px;
+                display: block;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                color: #5c5c5c;
+                font-size: 12px;
+                &:hover {
+                    color: black;
+                }
+                i {
+                    padding-right: 11px;
+                }
+            }
+            .active {
+                border-left: 3px solid #c62f2f;
+                background-color: #e6e7ea;
+                color: black;
+            }
+        }
+        > section {
+            flex: 1;
+            background: #fafafa;
+        }
+    }
+    // 底部
+    > footer {
+        .width-height(100%, 50px);
+        box-sizing: border-box;
+        background: #f6f6f8;
+        border-top: 1px solid #e1e1e2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .controlOne {
+            .width-height(140px, 34px);
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            button {
+                .width-height(30px, 30px);
+                background: #e83c3c;
+                border-radius: 50%;
+                color: white;
+                font-size: 14px;
+                text-align: center;
+                &:nth-of-type(2) {
+                    .width-height(34px, 34px);
+                }
+            }
+        }
+        .progress_box {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            .musicTime {
+                .width-height(70px, 100%);
+                text-align: center;
+            }
+            .progress {
+                flex: 1;
+                height: 7px;
+                background: #eaeaea;
+                border-radius: 5px;
+                position: relative;
+                .pro {
+                    width: 0;
+                    height: 7px;
+                    background: #e83c3c;
+                    position: relative;
+                    border-radius: 5px 0 0 5px;
+                    pointer-events: none;
+                    transition: all 0.3s;
+                    .dot {
+                        position: absolute;
+                        top: -5px;
+                        right: -8px;
+                        border: 1px solid #c3c3c3;
+                        background-color: white;
+                        border-radius: 50%;
+                        width: 16px;
+                        height: 16px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        pointer-events: all;
+                        &::before {
+                            content: "";
+                            display: block;
+                            width: 4px;
+                            height: 4px;
+                            background: #e83c3c;
+                            border-radius: 50%;
+                        }
+                    }
+                }
+            }
+        }
+        .controlTwo {
+            .width-height(350px, 34px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .volumeBox {
+                .width-height(240px, 100%);
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                i {
+                    color: #666666;
+                    font-size: 20px;
+                    cursor: pointer;
+                }
+                .volume {
+                    flex: 1;
+                    height: 40px;
+                    padding-left: 25px;
+                    padding-right: 30px;
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    &::before {
+                        content: "";
+                        display: flex;
+                        width: 165px;
+                        height: 7px;
+                        border-radius: 5px;
+                        background: #e6e6e8;
+                        position: absolute;
+                    }
+                    .pro {
+                        width: 100%;
+                        height: 7px;
+                        background: #e83c3c;
+                        position: relative;
+                        border-radius: 5px;
+                        pointer-events: none;
+                        
+                        .dot {
+                            position: absolute;
+                            top: -5px;
+                            right: -8px;
+                            border: 1px solid #c3c3c3;
+                            background-color: white;
+                            border-radius: 50%;
+                            width: 16px;
+                            height: 16px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            pointer-events: none;
+                            cursor: pointer;
+                            &::before {
+                                content: "";
+                                display: block;
+                                width: 4px;
+                                height: 4px;
+                                background: #e83c3c;
+                                border-radius: 50%;
+                            }
+                        }
+                    }
+                }
+            }
+            > button {
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                user-select: none;
+            }
+        }
+    }
+}

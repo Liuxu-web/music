@@ -1,0 +1,23 @@
+.Main {
+  padding: 0 30px;
+}
+.Main > header {
+  box-sizing: border-box;
+  width: auto;
+  height: 43px;
+  border-bottom: 1px solid #e1e1e2;
+  display: flex;
+  justify-content: center;
+}
+.Main > header > a {
+  box-sizing: border-box;
+  margin: 0 14px;
+  display: block;
+  width: 56px;
+  height: 100%;
+  text-align: center;
+  line-height: 43px;
+}
+.Main > header > a.active {
+  border-bottom: 2px solid red;
+}
