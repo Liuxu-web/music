@@ -1,26 +1,28 @@
 .width-height(@w,@h) {
-  width: @w;
-  height: @h;
+    width: @w;
+    height: @h;
 }
 
 .Main {
-  padding: 0 30px;
-  > header {
+    .width-height(100%,100%);
+    padding: 0 30px;
     box-sizing: border-box;
-    .width-height(auto,43px);
-    border-bottom: 1px solid #e1e1e2;
-    display: flex;
-    justify-content: center;
-    > a {
-      box-sizing: border-box;
-      margin: 0 14px;
-      display: block;
-      .width-height(56px, 100%);
-      text-align: center;
-      line-height: 43px;
-      &.active {
-        border-bottom: 2px solid red;
-      }
+    > header {
+        box-sizing: border-box;
+        .width-height(auto,43px);
+        border-bottom: 1px solid #e1e1e2;
+        display: flex;
+        justify-content: center;
+        > a {
+            box-sizing: border-box;
+            margin: 0 14px;
+            display: block;
+            .width-height(56px, 100%);
+            text-align: center;
+            line-height: 43px;
+            &.active {
+                border-bottom: 2px solid red;
+            }
+        }
     }
-  }
 }

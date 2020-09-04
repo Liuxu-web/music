@@ -15,7 +15,7 @@ export default class AudioPlayer extends Component {
             playtime: "", // 未修改:播放时长 单位S
             isChange: false, // 是否开启移动函数开关
             isMute: false, // 是否静音
-            m_move_x: 0,
+            m_move_x: 0, 
             m_down_x: 0,
             dx: 0,
             md_x: 0,
@@ -111,11 +111,19 @@ export default class AudioPlayer extends Component {
                         };
                     },
                     () => {
-                        this.setState((prevState) => {
-                            return {
-                                ndx: prevState.m_move_x - prevState.md_x,
-                            };
-                        });
+                        this.setState(
+                            (prevState) => {
+                                return {
+                                    ndx: prevState.m_move_x - prevState.md_x,
+                                };
+                            },
+                            () => {
+                                let num = (1 - (165 - this.state.ndx) / 165).toFixed(2);
+                                if (num > 1) num = 1;
+                                else if (num < 0) num = 0;
+                                this.audio.volume = num;
+                            }
+                        );
                     }
                 );
             }
@@ -128,10 +136,6 @@ export default class AudioPlayer extends Component {
                     isDown: false,
                 };
             });
-            let num = (1 - (165 - this.state.ndx) / 165).toFixed(2);
-            if (num > 1) num = 1;
-            else if (num < 0) num = 0;
-            this.audio.volume = num;
         }
     }
     // 静音
@@ -179,6 +183,7 @@ export default class AudioPlayer extends Component {
                 this.setState(() => {
                     return {
                         iconfont: "iconfont icon-bofang",
+                        presentTime :"00:00"
                     };
                 });
             }
