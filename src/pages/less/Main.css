@@ -3,6 +3,8 @@
   height: 100%;
   padding: 0 30px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 .Main > header {
   box-sizing: border-box;

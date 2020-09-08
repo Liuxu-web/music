@@ -1,39 +1,38 @@
 import React, { Component } from "react";
-import { musicTime } from "../../utils";
+import { musicTime, supplement } from "../../utils";
 
 export default class AudioPlayer extends Component {
     constructor(params) {
         super(params);
-        this.audio = "";
-        this.dot = "";
+        this.sumProgress = null;
+        this.audio = null;
+        this.dot = null;
+        this.volume_sumProgress = null;
+        this.volume_dot = null;
         this.state = {
-            totalTime: "", //总时长
-            presentTime: "", // 播放时长
+            volume_width: localStorage.volume_width || "100%", // 进度条宽
+            muteIconfont: "iconfont icon-Volumeyinliang",
             iconfont: "iconfont icon-bofang", // 图标
-            width: 0, // 进度条宽
+            presentTime: "", // 播放时长
+            totalTime: "", //总时长
             songTime: "", // 未修改:原总时长 单位S
             playtime: "", // 未修改:播放时长 单位S
-            isChange: false, // 是否开启移动函数开关
+            isMove: true, // 是否开启移动函数开关
             isMute: false, // 是否静音
-            m_move_x: 0, 
-            m_down_x: 0,
-            dx: 0,
-            md_x: 0,
-            ndx: 165,
+            isPlay: false, // 是否播放
+            width: null, // 进度条宽
         };
     }
-
-    // 根据时间获取百分比
-    percentum(znum, gnum, func) {
-        let number = ((znum - gnum) / znum).toFixed(4).substr(2, 4).split("") || 100;
+    percentum(znum, gnum, boll, func) {
+        let number = ((znum - gnum) / znum).toFixed(4).substr(2, 4).split("");
         let num = 1 - (znum - gnum) / znum;
         number.splice(2, 0, ".");
-        number = number.join("") - 0;
-        if (number === 0) number = 100;
+        number = number.join("");
         this.setState(
             () => {
+                let width = boll ? "width" : "volume_width";
                 return {
-                    width: 100 - number + "%",
+                    [width]: 100 - number === 100 ? 0 : 100 - number + "%",
                 };
             },
             () => {
@@ -50,6 +49,7 @@ export default class AudioPlayer extends Component {
                 () => {
                     return {
                         iconfont: "iconfont icon-stop",
+                        isPlay: true,
                     };
                 },
                 () => {
@@ -59,109 +59,45 @@ export default class AudioPlayer extends Component {
         else
             this.setState(
                 () => {
-                    return { iconfont: "iconfont icon-bofang" };
+                    return {
+                        iconfont: "iconfont icon-bofang",
+                        isPlay: false,
+                    };
                 },
                 () => {
                     this.audio.pause();
                 }
             );
     }
-    // 点击进度条
-    clickProgress(event) {
-        event.persist();
-        if (event.target.className === "progress") {
-            console.log(event.target.clientWidth, event.nativeEvent.offsetX);
-            this.percentum(event.target.clientWidth, event.nativeEvent.offsetX, (num) => {
-                this.audio.currentTime = num * this.state.songTime;
-            });
-        }
-    }
-
-    mouseDown(event) {
-        event.persist();
-        if (event.target.className === "volume") {
-            this.setState(
-                () => {
-                    return {
-                        isDown: true,
-                        m_down_x: event.pageX - 8,
-                        dx: this.dot.offsetLeft,
-                    };
-                },
-                () => {
-                    this.setState((prevState) => {
-                        return {
-                            md_x: prevState.m_down_x - prevState.dx,
-                        };
-                    });
-                }
-            );
-        }
-    }
-    mouseMove(event) {
-        event.persist();
-        if (event.target.className === "volume") {
-            //鼠标按下时移动才触发
-            if (this.state.isDown) {
-                this.setState(
-                    () => {
-                        return {
-                            dx: this.dot.offsetLeft,
-                            m_move_x: event.pageX - 8,
-                        };
-                    },
-                    () => {
-                        this.setState(
-                            (prevState) => {
-                                return {
-                                    ndx: prevState.m_move_x - prevState.md_x,
-                                };
-                            },
-                            () => {
-                                let num = (1 - (165 - this.state.ndx) / 165).toFixed(2);
-                                if (num > 1) num = 1;
-                                else if (num < 0) num = 0;
-                                this.audio.volume = num;
-                            }
-                        );
-                    }
-                );
-            }
-        }
-    }
-    mouseUp() {
-        if (this.state.isDown) {
-            this.setState(() => {
-                return {
-                    isDown: false,
-                };
-            });
-        }
+    // 音量
+    history(boll) {
+        if (boll) return localStorage.volume_width === "0" ? "20%" : localStorage.volume_width;
+        else return "0%";
     }
     // 静音
-    mute() {
+    mute = () => {
         this.setState(
             (prevState) => {
                 return {
                     isMute: !prevState.isMute,
-                    ndx: this.state.isMute ? 165 : 0,
+                    muteIconfont: !prevState.isMute
+                        ? "iconfont icon-jingyin"
+                        : "iconfont icon-Volumeyinliang",
+                    volume_width: this.history(this.state.isMute),
                 };
             },
             () => {
-                console.log(this.state.isMute);
                 this.audio.muted = this.state.isMute;
+                this.audio.volume = "0." + supplement(parseInt(this.state.volume_width));
             }
         );
-    }
+    };
 
     componentDidMount() {
         this.audio.src =
-            "https://isure.stream.qqmusic.qq.com/C400000I42sc1Lrn0d.m4a?guid=4671197247&vkey=214882FEAB679573C08645C641490EE9AECD8F7C2FF851DF98FB66CA5A1D3A49DDA6B889156E6DD95FE0764477F5DAA03C8EB624DCE72CB6&uin=0&fromtag=66";
+            "https://ws.stream.qqmusic.qq.com/C400000T5NNf3Ez4ES.m4a?guid=4671197247&vkey=12A56C98D62F839A6CC5D8FFEFE5A5EC868F11000ACB79184BBFEB68689E96C74330200B7C9A4AB39B06F56381A3673FEAE1C46E24E1F3D8&uin=2873&fromtag=66";
+        this.audio.volume = "0." + parseInt(localStorage.volume_width);
         // 加载完毕周期
-        this.audio.playbackRate = 1;
-
-        console.log("当前音量", this.audio.volume);
-
         this.audio.addEventListener("canplay", () => {
             this.setState(() => {
                 return {
@@ -171,19 +107,14 @@ export default class AudioPlayer extends Component {
                 };
             });
         });
-        // 开始周期
-        this.audio.addEventListener("play", () => {
-            console.log("开始播放:" + this.audio.currentTime);
-        });
         // 暂停周期
         this.audio.addEventListener("pause", () => {
-            console.log("暂停播放:" + this.audio.currentTime);
-            console.table();
             if (this.audio.ended) {
                 this.setState(() => {
                     return {
                         iconfont: "iconfont icon-bofang",
-                        presentTime :"00:00"
+                        presentTime: "00:00",
+                        isPlay: false,
                     };
                 });
             }
@@ -198,11 +129,134 @@ export default class AudioPlayer extends Component {
                     };
                 },
                 () => {
-                    this.percentum(this.state.songTime, this.state.playtime);
+                    this.percentum(this.state.songTime, this.state.playtime, true);
                 }
             );
         });
     }
+    //点击跳转指定播放位置
+    sumProgressClick = (event) => {
+        event.persist();
+        this.percentum(event.target.clientWidth, event.nativeEvent.layerX, true, (num) => {
+            this.audio.currentTime = num * this.state.songTime;
+        });
+    };
+    //dot 鼠标按下
+    dotMouseDown = () => {
+        this.setState(
+            () => {
+                return {
+                    isMove: false,
+                };
+            },
+            () => {
+                this.dot.style.pointerEvents = "none";
+                this.sumProgress.style.pointerEvents = "none";
+                this.audio.pause();
+            }
+        );
+    };
+    //fansile 鼠标移动
+    fansileMouseMove = (event) => {
+        event.persist();
+        if (this.state.isMove) return;
+
+        this.percentum(event.target.clientWidth, event.nativeEvent.layerX, true, (num) => {
+            this.audio.currentTime = num * this.state.songTime;
+        });
+    };
+    //dot 鼠标抬起 fansile 鼠标抬起 鼠标移出
+    MouseUp = () => {
+        if (this.state.isMove === false) {
+            this.setState(
+                () => {
+                    return {
+                        isMove: true,
+                    };
+                },
+                () => {
+                    this.dot.style.pointerEvents = "all";
+                    this.sumProgress.style.pointerEvents = "all";
+                    if (this.audio.paused && this.state.isPlay) this.audio.play();
+                }
+            );
+        }
+    };
+    //点击调到指定位置音量
+    volume_sumProgressClick = (event) => {
+        event.persist();
+        this.percentum(event.target.clientWidth, event.nativeEvent.layerX, false, (num) => {
+            this.audio.volume = num.toFixed(2);
+            localStorage.volume_width = this.state.volume_width;
+        });
+    };
+    //volume_dot 鼠标按下
+    volume_dotMouseDown = () => {
+        this.setState(
+            () => {
+                return {
+                    isMove: false,
+                };
+            },
+            () => {
+                this.volume_dot.style.pointerEvents = "none";
+                this.volume_sumProgress.style.pointerEvents = "none";
+            }
+        );
+    };
+    //volume_fansile 鼠标移动
+    volume_fansileMouseMove = (event) => {
+        event.persist();
+        if (this.state.isMove) return;
+        this.percentum(event.target.clientWidth, event.nativeEvent.layerX, false, (num) => {
+            this.audio.volume = num.toFixed(2);
+            localStorage.volume_width = this.state.volume_width;
+            if (this.audio.volume === 0) {
+                this.setState(
+                    (prevState) => {
+                        return {
+                            isMute: !prevState.isMute,
+                            muteIconfont: !prevState.isMute
+                                ? "iconfont icon-jingyin"
+                                : "iconfont icon-Volumeyinliang",
+                            volume_width: this.history(this.state.isMute),
+                        };
+                    },
+                    () => {
+                        this.audio.muted = this.state.isMute;
+                    }
+                );
+            } else {
+                this.setState(
+                    () => {
+                        return {
+                            isMute: false,
+                            muteIconfont: "iconfont icon-Volumeyinliang",
+                        };
+                    },
+                    () => {
+                        this.audio.muted = this.state.isMute;
+                    }
+                );
+            }
+        });
+    };
+    //volume_dot 鼠标抬起 volume_fansile 鼠标抬起 鼠标移出
+    volume_MouseUp = () => {
+        if (this.state.isMove === false) {
+            this.setState(
+                () => {
+                    return {
+                        isMove: true,
+                    };
+                },
+                () => {
+                    this.volume_dot.style.pointerEvents = "all";
+                    this.volume_sumProgress.style.pointerEvents = "all";
+                }
+            );
+        }
+    };
 
     render() {
         return (
@@ -217,33 +271,59 @@ export default class AudioPlayer extends Component {
                 {/* 播放进度 */}
                 <div className="progress_box">
                     <div className="musicTime">{this.state.presentTime}</div>
-                    <div className="progress" onClick={this.clickProgress.bind(this)}>
-                        <div style={{ width: this.state.width }} className="pro">
-                            <div className="dot" />
+                    <div
+                        className="fansile"
+                        onMouseLeave={this.MouseUp}
+                        onMouseUp={this.MouseUp}
+                        onMouseMove={this.fansileMouseMove}
+                    >
+                        <div
+                            className="sumProgress"
+                            ref={(e) => (this.sumProgress = e)}
+                            onClick={this.sumProgressClick}
+                        ></div>
+                        <div className="progress" style={{ width: this.state.width }}>
+                            <i
+                                className="dot"
+                                ref={(e) => (this.dot = e)}
+                                onMouseDown={this.dotMouseDown}
+                                onMouseUp={this.MouseUp}
+                            ></i>
                         </div>
                     </div>
                     <div className="musicTime">{this.state.totalTime}</div>
                 </div>
                 {/* 其他控制 */}
-                <div className="controlTwo" onMouseUp={this.mouseUp.bind(this)}>
-                    <div
-                        className="volumeBox"
-                        onMouseDown={this.mouseDown.bind(this)}
-                        onMouseMove={this.mouseMove.bind(this)}
-                    >
+                <div className="controlTwo">
+                    <div className="volumeBox">
                         <i
                             target={"静音"}
-                            className="iconfont icon-Volumeyinliang"
-                            onClick={this.mute.bind(this)}
+                            className={this.state.muteIconfont}
+                            onClick={this.mute}
                         />
                         <div className="volume">
                             <div
-                                className="pro"
-                                style={{
-                                    width: this.state.ndx > 165 ? "165px" : this.state.ndx + "px",
-                                }}
+                                className="volume-fansile"
+                                onMouseLeave={this.volume_MouseUp}
+                                onMouseUp={this.volume_MouseUp}
+                                onMouseMove={this.volume_fansileMouseMove}
                             >
-                                <div className="dot" ref={(e) => (this.dot = e)} />
+                                <div
+                                    className="volume-sumProgress"
+                                    ref={(e) => (this.volume_sumProgress = e)}
+                                    onClick={this.volume_sumProgressClick}
+                                ></div>
+                                <div
+                                    className="volume-progress"
+                                    style={{ width: this.state.volume_width }}
+                                >
+                                    <i
+                                        className="volume-dot"
+                                        ref={(e) => (this.volume_dot = e)}
+                                        onMouseDown={this.volume_dotMouseDown}
+                                        onMouseUp={this.volume_MouseUp}
+                                    ></i>
+                                </div>
                             </div>
                         </div>
                     </div>

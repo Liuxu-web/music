@@ -115,9 +115,14 @@ a {
     text-decoration: none;
     color: #5c5c5c;
 }
+
 body {
     line-height: 1;
     font-size: 14px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 }
 ol,
 ul {
