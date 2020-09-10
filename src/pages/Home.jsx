@@ -13,6 +13,26 @@ export default class Home extends Component {
             isShow: false,
         };
     }
+    fullScreen = () => {
+        const docElm = document.documentElement;
+        const fullhalf =
+            document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen;
+        if (fullhalf) {
+            //W3C
+            if (document.exitFullscreen) document.exitFullscreen();
+            //FireFox
+            else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+            //Chrome等
+            else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+        } else {
+            if (docElm.requestFullscreen) docElm.requestFullscreen();
+            //FireFox
+            else if (docElm.mozRequestFullScreen) docElm.mozRequestFullScreen();
+            //Chrome等
+            else if (docElm.webkitRequestFullScreen) docElm.webkitRequestFullScreen();
+        }
+    };
+
     render() {
         const routerList = this.props.childrens;
         return (
@@ -51,8 +71,13 @@ export default class Home extends Component {
                             <li className="iconfont icon-shezhi"></li>
                             <li style={{ borderLeft: "2px solid #a82828", padding: "0" }}></li>
                             <li className="iconfont icon-zuixiaohua"></li>
-                            <li className="iconfont icon-chuangkou"></li>
-                            <li className="iconfont icon-guanbi"></li>
+                            <li className="iconfont icon-chuangkou" onClick={this.fullScreen} />
+                            <li>
+                                <a
+                                    className="iconfont icon-guanbi"
+                                    href="javascript:window.opener=null;window.open('','_self');window.close();"
+                                ></a>
+                            </li>
                         </ul>
                     </div>
                 </header>

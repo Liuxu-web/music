@@ -117,7 +117,13 @@
   font-size: 16px;
   cursor: pointer;
 }
+.Home > header .h-rg > ul > li a {
+  color: #e29595;
+}
 .Home > header .h-rg > ul > li:hover {
+  color: white;
+}
+.Home > header .h-rg > ul > li:hover a {
   color: white;
 }
 .Home > header .h-rg > ul > li > i {
