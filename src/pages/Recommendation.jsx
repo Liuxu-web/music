@@ -14,9 +14,4 @@ export default class Recommendation extends Component {
             </div>
         );
     }
-    componentDidMount() {
-        this.$get("/api/personal_fm").then((res) => {
-            console.log("res", res);
-        });
-    }
 }

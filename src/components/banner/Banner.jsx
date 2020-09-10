@@ -9,20 +9,10 @@ class Banner extends Component {
         this.timer = null;
         this.state = {
             current: 0,
-            dir: [
-                { name: "middle" },
-                { name: "end" },
-                { name: "normal" },
-                { name: "normal" },
-                { name: "normal" },
-                { name: "normal" },
-                { name: "normal" },
-                { name: "normal" },
-                { name: "normal" },
-                { name: "start" },
-            ],
+            dir: [{ name: "middle" }, { name: "end" }, { name: "normal" }, { name: "start" }],
         };
     }
+
     // 鼠标移出
     bannerLeave = () => {
         clearInterval(this.timer);
@@ -110,6 +100,7 @@ class Banner extends Component {
     // 界面挂载结束
     componentDidMount() {
         this.props.GET_BANNER.apply(this);
+
         this.automatic();
         document.addEventListener("visibilitychange", this.visibilityState);
     }

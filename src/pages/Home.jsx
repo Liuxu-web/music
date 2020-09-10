@@ -34,7 +34,7 @@ export default class Home extends Component {
                     <div className="h-rg">
                         <ul>
                             <img
-                                src="https://c-ssl.duitang.com/uploads/item/202004/04/20200404232224_EnfTK.thumb.1000_0.jpeg"
+                                src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3023806798,280362912&fm=26&gp=0.jpg"
                                 alt=""
                             />
                             <li

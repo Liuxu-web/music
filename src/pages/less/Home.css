@@ -266,24 +266,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-right: 30px;
 }
 .Home > footer .controlTwo .volumeBox {
-  width: 240px;
+  width: 200px;
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.Home > footer .controlTwo .volumeBox i {
+.Home > footer .controlTwo .volumeBox > i {
   color: #666666;
   font-size: 20px;
   cursor: pointer;
+  padding: 0 15px;
 }
 .Home > footer .controlTwo .volumeBox .volume {
   flex: 1;
   height: 40px;
-  padding-left: 25px;
-  padding-right: 30px;
   display: flex;
   align-items: center;
 }
@@ -343,4 +343,5 @@
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+  cursor: pointer;
 }

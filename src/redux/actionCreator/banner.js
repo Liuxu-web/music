@@ -10,11 +10,17 @@ function actionBanner(payload) {
 export default {
     GET_BANNER() {
         return (dispatch) => {
-            console.log(111);
             this.$get("/api/banner?type=0").then(({ banners, code }) => {
-                console.log(this, "我是Creator");
                 code === 200 ? dispatch(actionBanner(banners)) : console.log("服务器瞌睡啦!banner");
-                // console.log();
+                const length = banners.length;
+                let newDir = [];
+                for (let i = 0; i < length; i++) {
+                    if (i === 0) newDir.push({ name: "middle" });
+                    else if (i === 1) newDir.push({ name: "end" });
+                    else if (i === length - 1) newDir.push({ name: "start" });
+                    else newDir.push({ name: "normal" });
+                }
+                this.setState({ dir: newDir });
             });
         };
     },

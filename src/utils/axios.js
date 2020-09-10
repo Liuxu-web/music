@@ -42,5 +42,8 @@ const get = (url, params = {}) => {
         params,
     });
 };
-
+const post = (url, params) => {
+    return axios.post(url, params);
+};
 Component.prototype.$get = get;
+Component.prototype.$post = post;

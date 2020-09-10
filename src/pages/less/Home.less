@@ -259,22 +259,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-right: 30px;
             .volumeBox {
-                .width-height(240px, 100%);
+                .width-height(200px, 100%);
 
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                i {
+                >i {
                     color: #666666;
                     font-size: 20px;
                     cursor: pointer;
+                    padding: 0 15px;
                 }
                 .volume {
                     flex: 1;
                     height: 40px;
-                    padding-left: 25px;
-                    padding-right: 30px;
                     display: flex;
                     align-items: center;
 
@@ -338,6 +338,7 @@
                 -moz-user-select: none;
                 -webkit-user-select: none;
                 user-select: none;
+                cursor: pointer;
             }
         }
     }

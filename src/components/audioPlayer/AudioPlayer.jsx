@@ -99,7 +99,10 @@ export default class AudioPlayer extends Component {
             }
         );
     };
-
+    // 播放模式
+    playPattern = () => {
+        this.audio.loop = true;
+    };
     componentDidMount() {
         this.audio.src = "http://mp3.9ku.com/mp3/569/568838.mp3";
         if (localStorage.volume_width) {
@@ -118,17 +121,15 @@ export default class AudioPlayer extends Component {
         });
         // 暂停周期
         this.audio.addEventListener("pause", () => {
-            // console.log(this.audio.ended)
-            console.log("caonima");
-            // if () {
-            //     this.setState(() => {
-            //         return {
-            //             iconfont: "iconfont icon-bofang",
-            //             presentTime: "00:00",
-            //             isPlay: false,
-            //         };
-            //     });
-            // }
+            if (this.audio.ended) {
+                this.setState(() => {
+                    return {
+                        iconfont: "iconfont icon-bofang",
+                        presentTime: "00:00",
+                        isPlay: false,
+                    };
+                });
+            }
         });
         // 播放中周期
         this.audio.addEventListener("timeupdate", () => {
@@ -338,9 +339,12 @@ export default class AudioPlayer extends Component {
                             </div>
                         </div>
                     </div>
+                    <button
+                        className="iconfont icon-danquxunhuan1"
+                        onClick={this.playPattern}
+                    ></button>
                     <button>标准</button>
                     <button>词</button>
-                    <button className="iconfont icon-wj-bflb"></button>
                 </div>
             </React.Fragment>
         );

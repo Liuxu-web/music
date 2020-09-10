@@ -15,6 +15,22 @@
   background-position: 0px 53px;
   box-shadow: 0 0 15px #666666;
 }
+.conceal .login_box .message {
+  width: 268px;
+  height: 74px;
+  box-sizing: border-box;
+  padding: 15px 15px;
+  color: white;
+  line-height: 22px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  z-index: 1;
+  transition: all 0.6s;
+}
 .conceal .login_box .form {
   position: absolute;
   box-sizing: border-box;
