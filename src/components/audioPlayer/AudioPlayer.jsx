@@ -71,11 +71,15 @@ export default class AudioPlayer extends Component {
     }
     // 音量
     history(boll) {
-        if (boll) return localStorage.volume_width === "0" ? "20%" : localStorage.volume_width;
-        else return "0%";
+        if (boll) {
+            if (localStorage.volume_width === "0") return "20%";
+            else if (!localStorage.volume_width) return "100%";
+            else if (localStorage.volume_width) return localStorage.volume_width;
+        } else return "0%";
     }
     // 静音
     mute = () => {
+        console.log(this.state.volume_width);
         this.setState(
             (prevState) => {
                 return {
@@ -88,15 +92,20 @@ export default class AudioPlayer extends Component {
             },
             () => {
                 this.audio.muted = this.state.isMute;
-                this.audio.volume = "0." + supplement(parseInt(this.state.volume_width));
+
+                if (localStorage.volume_width) {
+                    this.audio.volume = "0." + supplement(parseInt(this.state.volume_width));
+                } else this.audio.volume = 1;
             }
         );
     };
 
     componentDidMount() {
-        this.audio.src =
-            "https://ws.stream.qqmusic.qq.com/C400000T5NNf3Ez4ES.m4a?guid=4671197247&vkey=12A56C98D62F839A6CC5D8FFEFE5A5EC868F11000ACB79184BBFEB68689E96C74330200B7C9A4AB39B06F56381A3673FEAE1C46E24E1F3D8&uin=2873&fromtag=66";
-        this.audio.volume = "0." + parseInt(localStorage.volume_width);
+        this.audio.src = "http://mp3.9ku.com/mp3/569/568838.mp3";
+        if (localStorage.volume_width) {
+            this.audio.volume = "0." + parseInt(localStorage.volume_width);
+        } else this.audio.volume = 1;
+
         // 加载完毕周期
         this.audio.addEventListener("canplay", () => {
             this.setState(() => {
@@ -109,15 +118,17 @@ export default class AudioPlayer extends Component {
         });
         // 暂停周期
         this.audio.addEventListener("pause", () => {
-            if (this.audio.ended) {
-                this.setState(() => {
-                    return {
-                        iconfont: "iconfont icon-bofang",
-                        presentTime: "00:00",
-                        isPlay: false,
-                    };
-                });
-            }
+            // console.log(this.audio.ended)
+            console.log("caonima");
+            // if () {
+            //     this.setState(() => {
+            //         return {
+            //             iconfont: "iconfont icon-bofang",
+            //             presentTime: "00:00",
+            //             isPlay: false,
+            //         };
+            //     });
+            // }
         });
         // 播放中周期
         this.audio.addEventListener("timeupdate", () => {

@@ -1,15 +1,23 @@
 import React, { Component } from "react";
-
 import Router from "../routers/Router";
+import pubsub from "pubsub-js";
 import "./less/Home.css";
 import AudioPlayer from "../components/audioPlayer/AudioPlayer";
 import NavSidebar from "../components/navSidebar/NavSidebar";
+import Login from "../components/login/Login";
 
 export default class Home extends Component {
+    constructor(params) {
+        super(params);
+        this.state = {
+            isShow: false,
+        };
+    }
     render() {
         const routerList = this.props.childrens;
         return (
             <div className="Home">
+                {this.state.isShow ? <Login /> : null}
                 <header>
                     <div className="h-lf">
                         <h1>网易云音乐</h1>
@@ -25,8 +33,16 @@ export default class Home extends Component {
                     </div>
                     <div className="h-rg">
                         <ul>
-                            <img src="" alt="" />
-                            <li>
+                            <img
+                                src="https://c-ssl.duitang.com/uploads/item/202004/04/20200404232224_EnfTK.thumb.1000_0.jpeg"
+                                alt=""
+                            />
+                            <li
+                                onClick={() => {
+                                    this.setState({ isShow: !this.state.isShow });
+                                    console.log(this.state.isShow);
+                                }}
+                            >
                                 未登录&nbsp;<i className="iconfont icon-jiantouxia"></i>
                             </li>
                             <li>开通VIP</li>
@@ -53,5 +69,10 @@ export default class Home extends Component {
                 </footer>
             </div>
         );
+    }
+    componentDidMount() {
+        pubsub.subscribe("isShow", () => {
+            this.setState({ isShow: !this.state.isShow });
+        });
     }
 }

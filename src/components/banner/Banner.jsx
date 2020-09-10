@@ -25,6 +25,7 @@ class Banner extends Component {
     }
     // 鼠标移出
     bannerLeave = () => {
+        clearInterval(this.timer);
         this.automatic();
     };
     // 鼠标移入
@@ -50,7 +51,6 @@ class Banner extends Component {
                     };
                 },
                 () => {
-                    console.log("right", this.state.current);
                     if (this.state.current > 9)
                         this.setState(() => {
                             return { current: 0 };
@@ -128,7 +128,11 @@ class Banner extends Component {
                 {dir.map((item, index) => (
                     <div key={item + index} className={item.name}>
                         <img
-                            src={banner[index] ? banner[index].imageUrl : ""}
+                            src={
+                                banner[index]
+                                    ? banner[index].imageUrl
+                                    : require("../../assets/lazy.gif")
+                            }
                             alt={banner[index] ? banner[index].typeTitle : ""}
                         />
                         <div
