@@ -13,6 +13,7 @@ export default class Home extends Component {
             isShow: false,
         };
     }
+    // 切换全屏
     fullScreen = () => {
         const docElm = document.documentElement;
         const fullhalf =
@@ -32,7 +33,12 @@ export default class Home extends Component {
             else if (docElm.webkitRequestFullScreen) docElm.webkitRequestFullScreen();
         }
     };
-
+    componentDidMount() {
+        // 发布订阅-是否显示登录窗口
+        pubsub.subscribe("isShow", () => {
+            this.setState({ isShow: !this.state.isShow });
+        });
+    }
     render() {
         const routerList = this.props.childrens;
         return (
@@ -60,7 +66,7 @@ export default class Home extends Component {
                             <li
                                 onClick={() => {
                                     this.setState({ isShow: !this.state.isShow });
-                                    console.log(this.state.isShow);
+                                    console.log("???");
                                 }}
                             >
                                 未登录&nbsp;<i className="iconfont icon-jiantouxia"></i>
@@ -72,12 +78,10 @@ export default class Home extends Component {
                             <li style={{ borderLeft: "2px solid #a82828", padding: "0" }}></li>
                             <li className="iconfont icon-zuixiaohua"></li>
                             <li className="iconfont icon-chuangkou" onClick={this.fullScreen} />
-                            <li>
-                                <a
-                                    className="iconfont icon-guanbi"
-                                    href="javascript:window.opener=null;window.open('','_self');window.close();"
-                                ></a>
-                            </li>
+                            <li
+                                className="iconfont icon-guanbi"
+                                onClick={() => window.close()}
+                            ></li>
                         </ul>
                     </div>
                 </header>
@@ -94,10 +98,5 @@ export default class Home extends Component {
                 </footer>
             </div>
         );
-    }
-    componentDidMount() {
-        pubsub.subscribe("isShow", () => {
-            this.setState({ isShow: !this.state.isShow });
-        });
     }
 }

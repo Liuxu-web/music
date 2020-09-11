@@ -1,0 +1,87 @@
+.conceal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.conceal .login_box {
+  z-index: 5;
+  position: relative;
+  width: 350px;
+  height: 500px;
+  background: url(../../assets/手机登录.png) no-repeat #fafafa;
+  background-position: 0px 53px;
+  box-shadow: 0 0 15px #666666;
+}
+.conceal .login_box .back {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  color: #999999;
+  cursor: pointer;
+  font-size: 10px;
+}
+.conceal .login_box .back i {
+  font-size: 10px;
+}
+.conceal .login_box .back:hover {
+  color: #666666;
+}
+.conceal .login_box > button:nth-of-type(1) {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #999999;
+  cursor: pointer;
+}
+.conceal .login_box > button:nth-of-type(1):hover {
+  color: #666666;
+}
+.conceal .login_box .code {
+  position: absolute;
+  top: 237px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.conceal .login_box .code > p {
+  position: absolute;
+  top: -53px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  width: 100%;
+  font-size: 10px;
+}
+.conceal .login_box .code input {
+  padding: 0;
+  width: 125px;
+  height: 40px;
+  box-sizing: border-box;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
+}
+.conceal .login_box .code .count-down {
+  width: 125px;
+  height: 40px;
+  box-sizing: border-box;
+  background-color: #dedede;
+  border-radius: 5px;
+}
+.conceal .login_box .finish {
+  width: 260px;
+  height: 40px;
+  position: absolute;
+  top: 317px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  color: white;
+  background: #ea4848;
+}

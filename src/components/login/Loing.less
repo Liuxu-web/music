@@ -1,0 +1,88 @@
+.wh(@w,@h) {
+    width: @w;
+    height: @h;
+}
+.conceal {
+    position: absolute;
+    .wh(100%, 100%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .login_box {
+        z-index: 5;
+        position: relative;
+        .wh(350px, 500px);
+        background: url(../../assets/手机登录.png) no-repeat #fafafa;
+        background-position: 0px 53px;
+        box-shadow: 0 0 15px #666666;
+        .back {
+            position: absolute;
+            top: 15px;
+            left: 10px;
+            color: #999999;
+            cursor: pointer;
+            font-size: 10px;
+            i {
+                font-size: 10px;
+            }
+            &:hover {
+                color: #666666;
+            }
+        }
+        > button:nth-of-type(1) {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #999999;
+            cursor: pointer;
+            &:hover {
+                color: #666666;
+            }
+        }
+        .code {
+            position: absolute;
+            top: 237px;
+            left: 50%;
+            transform: translateX(-50%);
+            .wh(260px, 40px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            > p {
+                position: absolute;
+                top: -53px;
+                height: 20px;
+                text-align: center;
+                line-height: 20px;
+                width: 100%;
+                font-size: 10px;
+            }
+            input {
+                padding: 0;
+                .wh(125px,40px);
+                box-sizing: border-box;
+                border: 1px solid #dcdcdc;
+                border-radius: 5px;
+            }
+            .count-down {
+                .wh(125px,40px);
+                box-sizing: border-box;
+                background-color: #dedede;
+                border-radius: 5px;
+            }
+        }
+        .finish {
+            .wh(260px, 40px);
+            position: absolute;
+            top: 317px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            color: white;
+            background: #ea4848;
+        }
+    }
+}

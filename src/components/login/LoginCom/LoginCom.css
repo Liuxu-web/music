@@ -1,21 +1,10 @@
-.conceal {
-  position: absolute;
+.login-com,
+.reset-com {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-.conceal .login_box {
-  z-index: 5;
-  position: relative;
-  width: 350px;
-  height: 500px;
-  background: url(../../assets/手机登录.png) no-repeat #fafafa;
-  background-position: 0px 53px;
-  box-shadow: 0 0 15px #666666;
-}
-.conceal .login_box .message {
+.login-com .message,
+.reset-com .message {
   width: 268px;
   height: 74px;
   box-sizing: border-box;
@@ -31,7 +20,8 @@
   z-index: 1;
   transition: all 0.6s;
 }
-.conceal .login_box .form {
+.login-com .form,
+.reset-com .form {
   position: absolute;
   box-sizing: border-box;
   top: 196px;
@@ -41,14 +31,16 @@
   border: 1px solid #d8d8d8;
   border-radius: 5px;
 }
-.conceal .login_box .form .phone {
+.login-com .form .phone,
+.reset-com .form .phone {
   width: 100%;
   height: 39px;
   border-bottom: 1px solid #d8d8d8;
   display: flex;
   justify-content: space-between;
 }
-.conceal .login_box .form .phone .select {
+.login-com .form .phone .select,
+.reset-com .form .phone .select {
   box-sizing: border-box;
   border-right: 1px solid #d8d8d8;
   width: 87px;
@@ -56,45 +48,61 @@
   display: flex;
   align-items: center;
 }
-.conceal .login_box .form .phone .select .area_code {
+.login-com .form .phone .select .area_code,
+.reset-com .form .phone .select .area_code {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 10px;
 }
-.conceal .login_box .form .phone .select .area_code > i {
+.login-com .form .phone .select .area_code > i,
+.reset-com .form .phone .select .area_code > i {
   font-size: 10px;
   padding-left: 5px;
 }
-.conceal .login_box .form .phone input {
+.login-com .form .phone input,
+.reset-com .form .phone input {
   padding-left: 24px;
   width: 145px;
   height: 100%;
   color: #333333;
 }
-.conceal .login_box .form .password {
+.login-com .form .password,
+.reset-com .form .password {
   width: 100%;
   height: 38px;
+  position: relative;
 }
-.conceal .login_box .form .password input {
+.login-com .form .password input,
+.reset-com .form .password input {
   padding: 0;
-  width: 150px;
+  width: 200px;
   height: 100%;
   color: #333333;
 }
-.conceal .login_box .form .password button {
+.login-com .form .password button,
+.reset-com .form .password button {
+  border-radius: 0 0 10px 0;
+  height: 37px;
+  position: absolute;
+  top: 0;
+  right: 0;
   color: #b3b3b3;
+  background: #fafafa;
   cursor: pointer;
 }
-.conceal .login_box .form input::-webkit-input-placeholder {
+.login-com .form input::-webkit-input-placeholder,
+.reset-com .form input::-webkit-input-placeholder {
   /* WebKit browsers */
   color: #999999;
 }
-.conceal .login_box .form i {
+.login-com .form i,
+.reset-com .form i {
   padding: 0 11px;
   color: #999999;
 }
-.conceal .login_box .hint {
+.login-com .hint,
+.reset-com .hint {
   width: 258px;
   position: absolute;
   top: 287px;
@@ -104,30 +112,24 @@
   align-items: center;
   font-size: 10px;
 }
-.conceal .login_box .hint .autologin {
+.login-com .hint .autologin,
+.reset-com .hint .autologin {
   width: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: #686868;
 }
-.conceal .login_box .hint .loginerr {
+.login-com .hint .loginerr,
+.reset-com .hint .loginerr {
   color: #cd4747;
 }
-.conceal .login_box .hint .loginerr > i {
+.login-com .hint .loginerr > i,
+.reset-com .hint .loginerr > i {
   font-size: 10px;
 }
-.conceal .login_box > button:nth-of-type(1) {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #999999;
-  cursor: pointer;
-}
-.conceal .login_box > button:nth-of-type(1):hover {
-  color: #666666;
-}
-.conceal .login_box > button:nth-of-type(2) {
+.login-com > button:nth-of-type(1),
+.reset-com > button:nth-of-type(1) {
   position: absolute;
   top: 315px;
   left: 45px;
@@ -139,10 +141,12 @@
   font-size: 16px;
   cursor: pointer;
 }
-.conceal .login_box > button:nth-of-type(2):hover {
+.login-com > button:nth-of-type(1):hover,
+.reset-com > button:nth-of-type(1):hover {
   background: #c72e2e;
 }
-.conceal .login_box > button:nth-of-type(3) {
+.login-com > button:nth-of-type(2),
+.reset-com > button:nth-of-type(2) {
   position: absolute;
   top: 370px;
   left: 50%;
@@ -150,7 +154,8 @@
   text-decoration: underline;
   cursor: pointer;
 }
-.conceal .login_box .agreement {
+.login-com .agreement,
+.reset-com .agreement {
   position: absolute;
   display: flex;
   align-items: center;
@@ -161,12 +166,14 @@
   transform: translateX(-50%);
   font-size: 10px;
 }
-.conceal .login_box .agreement input {
+.login-com .agreement input,
+.reset-com .agreement input {
   padding: 0;
   margin: 0;
   color: #c72e2e;
 }
-.conceal .login_box .agreement i {
+.login-com .agreement i,
+.reset-com .agreement i {
   color: #507daf;
   cursor: pointer;
 }
