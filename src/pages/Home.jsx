@@ -18,6 +18,7 @@ export default class Home extends Component {
         const docElm = document.documentElement;
         const fullhalf =
             document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen;
+        console.log(fullhalf)
         if (fullhalf) {
             //W3C
             if (document.exitFullscreen) document.exitFullscreen();

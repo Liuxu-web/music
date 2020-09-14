@@ -2,6 +2,7 @@ import { GET_BANNER } from "../actionType/banner";
 
 let list = {
     banner_list: [],
+    blength: 0,
 };
 
 const getBannerList = (state = list, { type, payload }) => {

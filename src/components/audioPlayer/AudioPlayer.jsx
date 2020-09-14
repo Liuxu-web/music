@@ -104,7 +104,9 @@ export default class AudioPlayer extends Component {
         this.audio.loop = true;
     };
     componentDidMount() {
-        this.audio.src = "http://mp3.9ku.com/mp3/569/568838.mp3";
+        this.audio.src =
+            "https://isure.stream.qqmusic.qq.com/C400004OZAE22YnVrF.m4a?guid=4671197247&vkey=F8CC7583F854211BAA2E4F1D6C6EA1110BCA782FBA42A3361FDF690EB56C665CED9C77B3ABCB2EF0204345AB20AB3B1575D2E371A6CD86C5&uin=0&fromtag=66";
+        this.audio.playbackRate = 1;
         if (localStorage.volume_width) {
             this.audio.volume = "0." + parseInt(localStorage.volume_width);
         } else this.audio.volume = 1;

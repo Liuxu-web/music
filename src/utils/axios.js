@@ -37,13 +37,14 @@ axios.interceptors.response.use(
     }
 );
 // get请求方式 参数: url地址. 与参数{}
-const get = (url, params = {}) => {
+export const get = (url, params = {}) => {
     return axios.get(url, {
         params,
     });
 };
-const post = (url, params) => {
+export const post = (url, params) => {
     return axios.post(url, params);
 };
+
 Component.prototype.$get = get;
 Component.prototype.$post = post;

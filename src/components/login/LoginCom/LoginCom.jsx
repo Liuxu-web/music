@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import pubsub from "pubsub-js";
 import md5 from "md5";
+import { isPhone } from "../../../utils";
 import "./LoginCom.css";
 
 export default class LoginCom extends Component {
@@ -43,11 +44,9 @@ export default class LoginCom extends Component {
             });
             return;
         }
-        // 验证手机号-密码
-        const reg = /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/;
-        const regText = reg.test(this.state.text);
         let setstate = [];
-        if (!regText) setstate = [1, "请输入正确的手机号"];
+        // 验证手机号-密码
+        if (!isPhone(this.state.text)) setstate = [1, "请输入正确的手机号"];
         else if (this.state.password === "") setstate = [2, "请输入登录密码"];
         else if (this.state.password.length < 7) setstate = [2, "请输入合规密码"];
         this.setState(
@@ -117,8 +116,11 @@ export default class LoginCom extends Component {
     };
     // 重设密码
     resetPassword = () => {
-        pubsub.publishSync("isTab", "reset");
+        pubsub.publishSync("isTab", {
+            tab: "reset",
+        });
     };
+    // 注册按钮
     signUp = () => {
         // 判断是否选中条款
         if (!this.state.agreementBoll) {
@@ -129,7 +131,9 @@ export default class LoginCom extends Component {
             });
             return;
         }
-        pubsub.publishSync("isTab", "sigin");
+        pubsub.publishSync("isTab", {
+            tab: "sigin",
+        });
     };
     render() {
         return (
@@ -177,7 +181,6 @@ export default class LoginCom extends Component {
                     </div>
                     {this.verify()}
                 </div>
-
                 <button onClick={this.signUp}>注册</button>
                 {/* 条款 */}
                 <div className="agreement">

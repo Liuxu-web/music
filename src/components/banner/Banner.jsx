@@ -9,6 +9,7 @@ class Banner extends Component {
         this.timer = null;
         this.state = {
             current: 0,
+            length: 3,
             dir: [{ name: "middle" }, { name: "end" }, { name: "normal" }, { name: "start" }],
         };
     }
@@ -31,6 +32,7 @@ class Banner extends Component {
     // 替换数组
     switchover = (direction) => {
         let dirCopy = this.state.dir;
+        const length = this.state.lengt;
         if (direction === "right") {
             const pop = dirCopy.pop(); // 从数组尾部弹出一个元素
             dirCopy.unshift(pop); // 尾部元素添加到数组头部
@@ -41,10 +43,11 @@ class Banner extends Component {
                     };
                 },
                 () => {
-                    if (this.state.current > 9)
+                    if (this.state.current > length - 1) {
                         this.setState(() => {
                             return { current: 0 };
                         });
+                    }
                 }
             );
         } else if (direction === "left") {
@@ -57,10 +60,11 @@ class Banner extends Component {
                     };
                 },
                 () => {
-                    if (this.state.current < 0)
+                    if (this.state.current < 0) {
                         this.setState(() => {
-                            return { current: 9 };
+                            return { current: length - 1 };
                         });
+                    }
                 }
             );
         }
