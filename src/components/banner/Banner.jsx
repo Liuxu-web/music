@@ -45,7 +45,7 @@ class Banner extends Component {
                 () => {
                     if (this.state.current > length - 1) {
                         this.setState(() => {
-                            return { current: 0 };
+                            return { current: 0 }; 
                         });
                     }
                 }
