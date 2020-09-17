@@ -28,7 +28,7 @@
   cursor: pointer;
   background: url("../../assets/topbar.png");
   background-position: 0px -10px;
-  transform: scale(0.7) translateX(-20px);
+  transform: scale(0.8) translateX(-20px);
 }
 .Home > header .h-lf .n-lf {
   width: 281px;
@@ -107,8 +107,8 @@
   align-items: center;
 }
 .Home > header .h-rg > ul > img {
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
 }
 .Home > header .h-rg > ul > li {
@@ -117,7 +117,6 @@
   height: 100%;
   color: #e29595;
   padding: 0 12px;
-  font-size: 16px;
   cursor: pointer;
 }
 .Home > header .h-rg > ul > li a {

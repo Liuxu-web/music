@@ -5,6 +5,8 @@ import "./less/Home.css";
 import AudioPlayer from "../components/audioPlayer/AudioPlayer";
 import NavSidebar from "../components/navSidebar/NavSidebar";
 import Login from "../components/login/Login";
+import { api_user_subcount, api_login_status } from "../utils/api";
+import { encode } from "jwt-simple";
 
 export default class Home extends Component {
     constructor(params) {
@@ -12,7 +14,7 @@ export default class Home extends Component {
         this.state = {
             isShow: false,
             userName: "未登录",
-            avatarUrl: "http://suo.im/5NIhtK",
+            avatarUrl: require("../assets/Blankface.jpg"),
             userId: "",
             userType: 0,
         };
@@ -38,10 +40,10 @@ export default class Home extends Component {
             else if (docElm.webkitRequestFullScreen) docElm.webkitRequestFullScreen();
         }
     };
+    // 获取
     getUser = () => {
-        this.$get("/api/login/status", {
-            withCredentials: true,
-        }).then(({ code, profile }) => {
+        // 解除缓存 &timestamp=${+new Date()}
+        api_login_status().then(({ code, profile }) => {
             if (code === 200) {
                 this.setState(() => {
                     return {
@@ -51,6 +53,9 @@ export default class Home extends Component {
                         userType: profile.userType,
                     };
                 });
+                if (!localStorage.uid) {
+                    localStorage.uid = encode(profile.userId, "liuxu");
+                }
             }
             console.log(code, profile);
         });
@@ -63,7 +68,11 @@ export default class Home extends Component {
                 if (content) this.getUser();
             });
         });
-        // this.getUser();
+        this.getUser();
+        // 获取用户信息,歌单,收藏,mv,dj数量
+        api_user_subcount().then((data) => {
+            console.log(data);
+        });
     }
     render() {
         const routerList = this.props.childrens;

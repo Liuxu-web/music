@@ -80,14 +80,20 @@ export default class AuthCode extends Component {
             } else console.log("验证验证码失败,请重新检查", data);
         });
     };
+    // 页面挂在结束
     componentDidMount() {
-        this.countDown();
+        // 进入页面就去吊起获取短信的验证码
         api_getcode(this.props.phone).then((data) => {
-            if (data.code === 200) console.log("获取验证码成功,请注意查看手机", data);
-            else console.log("获取验证码失败,请检查次数", data);
+            if (data.code === 200) {
+                //如果code为200 则进入60秒倒计时
+                this.countDown();
+                console.log("获取验证码成功,请注意查看手机", data);
+            } else console.log("获取验证码失败,请检查次数", data);
         });
     }
+    // 页面销毁阶段
     componentWillUnmount() {
+        // 清空副作用代码
         clearInterval(this.timer);
     }
     render() {

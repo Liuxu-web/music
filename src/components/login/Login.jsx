@@ -114,7 +114,7 @@ export default class Login extends Component {
                     ) : null}
                     {/* 关闭按钮 */}
                     <button className="iconfont icon-guanbi" onClick={this.changeFatherState} />
-                    {/*  */}
+                    {/* 四个组件根据发布订阅切换 */}
                     {this.table()}
                 </div>
             </div>

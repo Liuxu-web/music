@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import pubsub from "pubsub-js";
 import md5 from "md5";
-import { isPhone } from "../../../utils";
+import { isPhone, verify } from "../../../utils";
 import "./LoginCom.css";
 import Prompt from "../../prompt/Prompt";
 
@@ -26,14 +26,6 @@ export default class LoginCom extends Component {
             };
         });
     };
-    componentDidMount() {
-        // 退出登录
-        this.$get("/api/logout").then((data) => {
-            console.group("退出登录");
-            console.log(data);
-            console.groupEnd();
-        });
-    }
     // 登录按钮
     login = () => {
         // 判断是否选中条款
@@ -73,37 +65,10 @@ export default class LoginCom extends Component {
                             withCredentials: true,
                         });
                         if (code === 200) pubsub.publishSync("isShow", true);
-
-                        // console.group("刷新登录状态");
-                        // console.log(refresh);
-                        // console.groupEnd();
-
-                        // console.group("获取登录状态");
-                        // console.log(status);
-                        // console.groupEnd();
                     }
                 }
             }
         );
-    };
-    // 手机号-密码验证提示
-    verify = () => {
-        const index = this.state.hint;
-        if (index[0] === 1) {
-            return (
-                <div className="loginerr">
-                    <i className="iconfont icon-jinggao"></i>
-                    {index[1]}
-                </div>
-            );
-        } else if (index[0] === 2) {
-            return (
-                <div className="loginerr">
-                    <i className="iconfont icon-jinggao"></i>
-                    {index[1]}
-                </div>
-            );
-        }
     };
     // 同意 服务条款等...选择框
     checkedAgreement = () => {
@@ -135,12 +100,12 @@ export default class LoginCom extends Component {
         });
     };
     render() {
+        const { popup, password, text, hint, agreementBoll } = this.state;
         return (
             <div className="login-com">
-                {this.state.popup ? (
+                {popup ? (
                     <Prompt text={"请先勾选同意《服务条款》、《隐私政策》、《儿童隐私政策》"} />
                 ) : null}
-
                 {/* form表单 */}
                 <div className="form">
                     <div className="phone">
@@ -154,7 +119,7 @@ export default class LoginCom extends Component {
                             type="text"
                             placeholder="请输入手机号"
                             onChange={this.changeValue}
-                            value={this.state.text}
+                            value={text}
                         />
                     </div>
                     <div className="password">
@@ -163,7 +128,7 @@ export default class LoginCom extends Component {
                             type="password"
                             placeholder="请输入密码"
                             onChange={this.changeValue}
-                            value={this.state.password}
+                            value={password}
                         />
                         <button onClick={this.resetPassword}>重设密码</button>
                     </div>
@@ -176,20 +141,40 @@ export default class LoginCom extends Component {
                         <input type="checkbox" />
                         <span>自动登录</span>
                     </div>
-                    {this.verify()}
+                    {verify(hint)}
                 </div>
                 <button onClick={this.signUp}>注册</button>
                 {/* 条款 */}
                 <div className="agreement">
-                    <input
-                        type="checkbox"
-                        onChange={this.checkedAgreement}
-                        checked={this.state.agreementBoll}
-                    />
-                    <span>同意</span>
-                    <a href="https://st.music.163.com/official-terms/service">《服务条款》</a>
-                    <a href="https://st.music.163.com/official-terms/privacy">《隐私政策》</a>
-                    <a href="https://st.music.163.com/official-terms/children">《儿童隐私条款》</a>
+                    <label>
+                        <input
+                            type="checkbox"
+                            onChange={this.checkedAgreement}
+                            checked={agreementBoll}
+                        />
+                        <span>同意</span>
+                    </label>
+                    <a
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href="https://st.music.163.com/official-terms/service"
+                    >
+                        《服务条款》
+                    </a>
+                    <a
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href="https://st.music.163.com/official-terms/privacy"
+                    >
+                        《隐私政策》
+                    </a>
+                    <a
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href="https://st.music.163.com/official-terms/children"
+                    >
+                        《儿童隐私条款》
+                    </a>
                 </div>
             </div>
         );

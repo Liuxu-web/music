@@ -3,7 +3,7 @@
  */
 import React, { Component } from "react";
 import pubsub from "pubsub-js";
-import { isPhone } from "../../../utils";
+import { isPhone, verify } from "../../../utils";
 import { api_isSign } from "../../../utils/api";
 import "../LoginCom/LoginCom.css";
 import Prompt from "../../prompt/Prompt";
@@ -34,7 +34,7 @@ export default class ResetCom extends Component {
         // 验证手机号-密码
         if (!isPhone(this.state.text)) setstate = [1, "请输入正确的手机号"];
         else if (this.state.password === "") setstate = [2, "请输入登录密码"];
-        else if (this.state.password.length < 7) setstate = [2, "请输入合规密码"];
+        else if (this.state.password.length < 6) setstate = [2, "密码长度不少于6位数"];
         this.setState(
             () => {
                 return {
@@ -43,6 +43,7 @@ export default class ResetCom extends Component {
             },
             () => {
                 if (setstate.length === 0) {
+                    // 检测手机号码是否已注册
                     api_isSign(this.state.text).then(({ code, exist, hasPassword, nickname }) => {
                         if (code === 200 && hasPassword) {
                             console.log("有账号,去获取验证码", code, exist, hasPassword, nickname);
@@ -50,9 +51,9 @@ export default class ResetCom extends Component {
                                 tab: "code",
                                 phone: this.state.text,
                                 password: this.state.password,
-                                nickname: nickname,
                             });
                         } else {
+                            // 进入这个条件,手机号码没有注册
                             this.setState({ popup: true }, () => {
                                 setTimeout(() => {
                                     this.setState({ popup: false });
@@ -64,29 +65,12 @@ export default class ResetCom extends Component {
             }
         );
     };
-    // 手机号-密码验证提示
-    verify = () => {
-        const index = this.state.hint;
-        if (index[0] === 1) {
-            return (
-                <div className="loginerr">
-                    <i className="iconfont icon-jinggao"></i>
-                    {index[1]}
-                </div>
-            );
-        } else if (index[0] === 2) {
-            return (
-                <div className="loginerr">
-                    <i className="iconfont icon-jinggao"></i>
-                    {index[1]}
-                </div>
-            );
-        }
-    };
+
     render() {
+        const { hint, popup } = this.state;
         return (
             <div className="reset-com">
-                {this.state.popup ? <Prompt text={"没有该用户,请检测手机号或注册"} /> : null}
+                {popup ? <Prompt text={"没有该用户,请检测手机号或注册"} /> : null}
                 {/* form表单 */}
                 <div className="form">
                     <div className="phone">
@@ -116,7 +100,7 @@ export default class ResetCom extends Component {
                 {/* 登录按钮 - 下一步*/}
                 <button onClick={this.nextStep}>下一步</button>
                 {/* 提示账号 */}
-                <div className="hint">{this.verify()}</div>
+                <div className="hint">{verify(hint)}</div>
             </div>
         );
     }

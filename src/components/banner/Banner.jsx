@@ -45,7 +45,7 @@ class Banner extends Component {
                 () => {
                     if (this.state.current > length - 1) {
                         this.setState(() => {
-                            return { current: 0 }; 
+                            return { current: 0 };
                         });
                     }
                 }
@@ -113,6 +113,9 @@ class Banner extends Component {
         clearInterval(this.timer);
         document.removeEventListener("visibilitychange", this.visibilityState);
     }
+    link = (url) => {
+        return url ? <a href={url} rel="noopener noreferrer" target="_blank"> </a> : null;
+    };
     render() {
         const { dir } = this.state;
         const { banner } = this.props;
@@ -122,6 +125,8 @@ class Banner extends Component {
                 <button value=">" onClick={this.switchover.bind(this, "right")} />
                 {dir.map((item, index) => (
                     <div key={item + index} className={item.name}>
+                        {banner[index] ? this.link(banner[index].url) : null}
+
                         <img
                             src={
                                 banner[index]

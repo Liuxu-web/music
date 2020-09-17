@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { isPhone } from "../../../utils";
+import { isPhone, verify } from "../../../utils";
+import { api_isSign } from "../../../utils/api";
+import Prompt from "../../prompt/Prompt";
 import "../LoginCom/LoginCom.css";
 export default class SigninCom extends Component {
     constructor(params) {
@@ -8,6 +10,7 @@ export default class SigninCom extends Component {
             text: "", // 手机号
             password: "", // 密码
             hint: [], // 提示验证是否正确
+            popup: false,
         };
     }
     // 受控组件
@@ -21,40 +24,47 @@ export default class SigninCom extends Component {
     };
 
     // 登录按钮
-    login = () => {
+    signUp = () => {
         let setstate = [];
         // 验证手机号-密码
         if (!isPhone(this.state.text)) setstate = [1, "请输入正确的手机号"];
         else if (this.state.password === "") setstate = [2, "请输入登录密码"];
-        else if (this.state.password.length < 7) setstate = [2, "请输入合规密码"];
-        this.setState(() => {
-            return {
-                hint: setstate,
-            };
-        });
+        else if (this.state.password.length < 6) setstate = [2, "密码长度不少于6位数"];
+        this.setState(
+            () => {
+                return {
+                    hint: setstate,
+                };
+            },
+
+            () => {
+                if (setstate.length === 0) {
+                    // 检测手机号码是否已注册
+
+                    api_isSign(this.state.text).then((data) => {
+                        console.log("注册-手机号是否被注册方法", data);
+                        const { code, hasPassword } = data;
+                        if (code === 200 && hasPassword === false) {
+                            console.log("没有注册");
+                        } else {
+                            // 进入这个条件,手机号已经被注册
+                            this.setState({ popup: true }, () => {
+                                setTimeout(() => {
+                                    this.setState({ popup: false });
+                                }, 1400);
+                            });
+                        }
+                    });
+                }
+            }
+        );
     };
-    // 手机号-密码验证提示
-    verify = () => {
-        const index = this.state.hint;
-        if (index[0] === 1) {
-            return (
-                <div className="loginerr">
-                    <i className="iconfont icon-jinggao"></i>
-                    {index[1]}
-                </div>
-            );
-        } else if (index[0] === 2) {
-            return (
-                <div className="loginerr">
-                    <i className="iconfont icon-jinggao"></i>
-                    {index[1]}
-                </div>
-            );
-        }
-    };
+
     render() {
+        const { hint, popup } = this.state;
         return (
             <div className="reset-com">
+                {popup ? <Prompt text={"该手机号已经被注册,请去登录"} /> : null}
                 {/* form表单 */}
                 <div className="form">
                     <div className="phone">
@@ -82,9 +92,9 @@ export default class SigninCom extends Component {
                     </div>
                 </div>
                 {/* 登录按钮 - 下一步*/}
-                <button onClick={this.login}>注册</button>
+                <button onClick={this.signUp}>注册</button>
                 {/* 提示账号 */}
-                <div className="hint">{this.verify()}</div>
+                <div className="hint">{verify(hint)}</div>
             </div>
         );
     }

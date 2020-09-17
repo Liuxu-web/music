@@ -41,4 +41,13 @@ export async function api_login_status() {
     const data = await get("/api/login/status");
     return data;
 }
-// 获取用户详情
+// 获取用户详情 参数用户uid
+export async function api_user_detail(id) {
+    const data = await get(`/api/user/detail?uid=${id}`);
+    return data;
+}
+// 获取用户信息 , 歌单，收藏，mv, dj 数量
+export async function api_user_subcount() {
+    const data = await get(`/api/user/subcount`);
+    return data;
+}
