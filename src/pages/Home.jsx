@@ -11,6 +11,10 @@ export default class Home extends Component {
         super(params);
         this.state = {
             isShow: false,
+            userName: "未登录",
+            avatarUrl: "http://suo.im/5NIhtK",
+            userId: "",
+            userType: 0,
         };
     }
     // 切换全屏
@@ -18,7 +22,7 @@ export default class Home extends Component {
         const docElm = document.documentElement;
         const fullhalf =
             document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen;
-        console.log(fullhalf)
+        console.log(fullhalf);
         if (fullhalf) {
             //W3C
             if (document.exitFullscreen) document.exitFullscreen();
@@ -34,20 +38,42 @@ export default class Home extends Component {
             else if (docElm.webkitRequestFullScreen) docElm.webkitRequestFullScreen();
         }
     };
+    getUser = () => {
+        this.$get("/api/login/status", {
+            withCredentials: true,
+        }).then(({ code, profile }) => {
+            if (code === 200) {
+                this.setState(() => {
+                    return {
+                        userName: profile.nickname,
+                        avatarUrl: profile.avatarUrl,
+                        userId: profile.userId,
+                        userType: profile.userType,
+                    };
+                });
+            }
+            console.log(code, profile);
+        });
+    };
     componentDidMount() {
         // 发布订阅-是否显示登录窗口
-        pubsub.subscribe("isShow", () => {
-            this.setState({ isShow: !this.state.isShow });
+        pubsub.subscribe("isShow", (msgName, content) => {
+            this.setState({ isShow: !this.state.isShow }, () => {
+                console.log("发布订阅content");
+                if (content) this.getUser();
+            });
         });
+        // this.getUser();
     }
     render() {
         const routerList = this.props.childrens;
+        const { avatarUrl, userName, isShow } = this.state;
         return (
             <div className="Home">
-                {this.state.isShow ? <Login /> : null}
+                {isShow ? <Login /> : null}
                 <header>
                     <div className="h-lf">
-                        <h1>网易云音乐</h1>
+                        <div className="logo" />
                         <div className="n-lf">
                             <div className="btn">
                                 <button className="iconfont icon-jiantouzuo1"></button>
@@ -60,17 +86,13 @@ export default class Home extends Component {
                     </div>
                     <div className="h-rg">
                         <ul>
-                            <img
-                                src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3023806798,280362912&fm=26&gp=0.jpg"
-                                alt=""
-                            />
+                            <img src={avatarUrl} alt="" />
                             <li
                                 onClick={() => {
-                                    this.setState({ isShow: !this.state.isShow });
-                                    console.log("???");
+                                    this.setState({ isShow: !isShow });
                                 }}
                             >
-                                未登录&nbsp;<i className="iconfont icon-jiantouxia"></i>
+                                {userName}&nbsp;<i className="iconfont icon-jiantouxia"></i>
                             </li>
                             <li>开通VIP</li>
                             <li className="iconfont icon-pifu"></li>

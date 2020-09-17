@@ -5,24 +5,6 @@
   height: 100%;
   pointer-events: none;
 }
-.login-com .message,
-.reset-com .message {
-  width: 268px;
-  height: 74px;
-  box-sizing: border-box;
-  padding: 15px 15px;
-  color: white;
-  line-height: 22px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 10px;
-  z-index: 1;
-  transition: all 0.6s;
-  pointer-events: all;
-}
 .login-com .form,
 .reset-com .form {
   position: absolute;
@@ -181,8 +163,8 @@
   margin: 0;
   color: #c72e2e;
 }
-.login-com .agreement i,
-.reset-com .agreement i {
+.login-com .agreement a,
+.reset-com .agreement a {
   color: #507daf;
   cursor: pointer;
 }

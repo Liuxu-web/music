@@ -31,3 +31,14 @@ export async function api_verifyCode(phone, captcha) {
     });
     return data;
 }
+// 退出登录
+export async function api_logout() {
+    const data = await get("/api/logout");
+    return data;
+}
+// 获取登录状态
+export async function api_login_status() {
+    const data = await get("/api/login/status");
+    return data;
+}
+// 获取用户详情

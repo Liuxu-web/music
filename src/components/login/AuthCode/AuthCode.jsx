@@ -45,9 +45,9 @@ export default class AuthCode extends Component {
         clearInterval(this.timer);
         this.timer = setInterval(() => {
             this.setState(
-                () => {
+                (prevState) => {
                     return {
-                        time: supplement(this.state.time--),
+                        time: supplement(prevState.time--),
                     };
                 },
                 () => {

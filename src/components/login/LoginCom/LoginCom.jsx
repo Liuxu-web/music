@@ -3,6 +3,7 @@ import pubsub from "pubsub-js";
 import md5 from "md5";
 import { isPhone } from "../../../utils";
 import "./LoginCom.css";
+import Prompt from "../../prompt/Prompt";
 
 export default class LoginCom extends Component {
     constructor(params) {
@@ -27,11 +28,11 @@ export default class LoginCom extends Component {
     };
     componentDidMount() {
         // 退出登录
-        // this.$get("/api/logout").then((data) => {
-        //     console.group("退出登录");
-        //     console.log(data);
-        //     console.groupEnd();
-        // });
+        this.$get("/api/logout").then((data) => {
+            console.group("退出登录");
+            console.log(data);
+            console.groupEnd();
+        });
     }
     // 登录按钮
     login = () => {
@@ -68,20 +69,18 @@ export default class LoginCom extends Component {
                     if (logData.code === 502) {
                         console.log("密码或者手机号错误");
                     } else if (logData.code === 200) {
-                        const refresh = await this.$get("/api/login/refresh", {
+                        const { code } = await this.$get("/api/login/refresh", {
                             withCredentials: true,
                         });
+                        if (code === 200) pubsub.publishSync("isShow", true);
 
-                        console.group("刷新登录状态");
-                        console.log(refresh);
-                        console.groupEnd();
+                        // console.group("刷新登录状态");
+                        // console.log(refresh);
+                        // console.groupEnd();
 
-                        const status = await this.$get("/api/login/status", {
-                            withCredentials: true,
-                        });
-                        console.group("获取登录状态");
-                        console.log(status);
-                        console.groupEnd();
+                        // console.group("获取登录状态");
+                        // console.log(status);
+                        // console.groupEnd();
                     }
                 }
             }
@@ -139,9 +138,7 @@ export default class LoginCom extends Component {
         return (
             <div className="login-com">
                 {this.state.popup ? (
-                    <div className="message">
-                        请先勾选同意《服务条款》、《隐私政策》、《儿童隐私政策》
-                    </div>
+                    <Prompt text={"请先勾选同意《服务条款》、《隐私政策》、《儿童隐私政策》"} />
                 ) : null}
 
                 {/* form表单 */}
@@ -190,9 +187,9 @@ export default class LoginCom extends Component {
                         checked={this.state.agreementBoll}
                     />
                     <span>同意</span>
-                    <i>《服务条款》</i>
-                    <i>《隐私政策》</i>
-                    <i>《儿童隐私条款》</i>
+                    <a href="https://st.music.163.com/official-terms/service">《服务条款》</a>
+                    <a href="https://st.music.163.com/official-terms/privacy">《隐私政策》</a>
+                    <a href="https://st.music.163.com/official-terms/children">《儿童隐私条款》</a>
                 </div>
             </div>
         );

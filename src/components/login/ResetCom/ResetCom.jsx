@@ -6,6 +6,7 @@ import pubsub from "pubsub-js";
 import { isPhone } from "../../../utils";
 import { api_isSign } from "../../../utils/api";
 import "../LoginCom/LoginCom.css";
+import Prompt from "../../prompt/Prompt";
 
 export default class ResetCom extends Component {
     constructor(params) {
@@ -85,9 +86,7 @@ export default class ResetCom extends Component {
     render() {
         return (
             <div className="reset-com">
-                {this.state.popup ? (
-                    <div className="message">没有该用户,请检测手机号或注册</div>
-                ) : null}
+                {this.state.popup ? <Prompt text={"没有该用户,请检测手机号或注册"} /> : null}
                 {/* form表单 */}
                 <div className="form">
                     <div className="phone">
