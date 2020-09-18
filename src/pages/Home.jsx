@@ -8,7 +8,7 @@ import NavSidebar from "../components/navSidebar/NavSidebar";
 import Login from "../components/login/Login";
 import { api_login_status } from "../utils/api";
 import { fullScreen } from "../utils";
-import { encode } from "jwt-simple";
+import { decode, encode } from "jwt-simple";
 
 export default class Home extends Component {
     constructor(params) {
@@ -51,8 +51,13 @@ export default class Home extends Component {
         this.getUser();
     }
     openColor = () => {
-        console.log("打开全局背景颜色视窗");
-        
+        const uid = decode(sessionStorage.uid, "liuxu");
+        this.$get(`/api/user/playlist?uid=${uid}`).then((data) => {
+            console.log("用户歌单", data);
+            this.$get(`/api/playlist/detail?id=${data.playlist[1].id}`).then((res) => {
+                console.log("歌单1日系", res);
+            });
+        });
     };
     render() {
         const routerList = this.props.childrens;
