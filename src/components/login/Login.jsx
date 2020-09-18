@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import pubsub from "pubsub-js";
-import "./Loing.css";
+import "./Loing.less";
 import LoginCom from "./LoginCom/LoginCom";
 import ResetCom from "./ResetCom/ResetCom";
 import SigninCom from "./SigninCom/SigninCom";

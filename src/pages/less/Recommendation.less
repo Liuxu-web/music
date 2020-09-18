@@ -1,8 +1,3 @@
-.width-height(@w,@h) {
-    width: @w;
-    height: @h;
-}
-
 .Recommendation {
     flex: 1;
     @media (min-width: 1340px) and (max-width: 1540px) {
@@ -28,7 +23,9 @@
         }
     }
     .banner {
-        .width-height(1040px, 224px);
+        width: 1040px;
+        height: 224px;
+
         margin: 0 auto;
         margin-top: 20px;
         transition: all 0.4s;
@@ -37,13 +34,14 @@
         a {
             display: block;
             position: absolute;
-
-            .width-height(100%, 100%);
+            width: 100%;
+            height: 100%;
             z-index: 4;
             cursor: pointer;
         }
         img {
-            .width-height(100%, 100%);
+            width: 100%;
+            height: 100%;
             display: block;
             background: #eaeaea;
         }
@@ -62,14 +60,17 @@
             position: absolute;
             left: 0;
             bottom: 24px;
-            .width-height(250px, 190px);
+
+            width: 250px;
+            height: 190px;
             z-index: 5;
         }
         button:nth-of-type(2) {
             position: absolute;
             right: 0;
             bottom: 24px;
-            .width-height(250px, 190px);
+            width: 250px;
+            height: 190px;
             z-index: 5;
         }
         .start {
@@ -130,7 +131,8 @@
             transition: all 0.4s;
             > span {
                 display: block;
-                .width-height(25px, 4px);
+                width: 25px;
+                height: 4px;
                 margin: 0 5px;
                 background: rgba(0, 0, 0, 0.4);
             }

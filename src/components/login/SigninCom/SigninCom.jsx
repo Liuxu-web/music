@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { isPhone, verify } from "../../../utils";
 import { api_isSign } from "../../../utils/api";
 import Prompt from "../../prompt/Prompt";
-import "../LoginCom/LoginCom.css";
+import "../LoginCom/LoginCom.less";
 export default class SigninCom extends Component {
     constructor(params) {
         super(params);

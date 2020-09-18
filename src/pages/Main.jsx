@@ -3,7 +3,7 @@
  */
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import "./less/Main.css";
+import "./less/Main.less";
 import Router from "../routers/Router";
 export default class Main extends Component {
     render() {

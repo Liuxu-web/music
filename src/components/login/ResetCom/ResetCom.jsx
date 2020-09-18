@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import pubsub from "pubsub-js";
 import { isPhone, verify } from "../../../utils";
 import { api_isSign } from "../../../utils/api";
-import "../LoginCom/LoginCom.css";
+import "../LoginCom/LoginCom.less";
 import Prompt from "../../prompt/Prompt";
 
 export default class ResetCom extends Component {

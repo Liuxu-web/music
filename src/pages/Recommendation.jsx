@@ -3,7 +3,7 @@
  */
 import React, { Component } from "react";
 
-import "./less/Recommendation.css";
+import "./less/Recommendation.less";
 import Banner from "../components/banner/Banner";
 
 export default class Recommendation extends Component {

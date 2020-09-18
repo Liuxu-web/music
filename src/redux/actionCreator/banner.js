@@ -20,8 +20,7 @@ export default {
                     else if (i === length - 1) newDir.push({ name: "start" });
                     else newDir.push({ name: "normal" });
                 }
-                this.setState({ dir: newDir ,length :  length});
-                console.log(this)
+                this.setState({ dir: newDir, length: length });
             });
         };
     },

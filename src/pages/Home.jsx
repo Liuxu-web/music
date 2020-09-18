@@ -5,7 +5,7 @@ import "./less/Home.less";
 import AudioPlayer from "../components/audioPlayer/AudioPlayer";
 import NavSidebar from "../components/navSidebar/NavSidebar";
 import Login from "../components/login/Login";
-import { api_user_subcount, api_login_status } from "../utils/api";
+import { api_login_status } from "../utils/api";
 import { fullScreen } from "../utils";
 import { encode } from "jwt-simple";
 
@@ -22,26 +22,20 @@ export default class Home extends Component {
     }
     // 获取用户信息
     getUser = () => {
-        try {
-            api_login_status().then((data) => {
-                if (data.code === 200) {
-                    this.setState(() => {
-                        return {
-                            userName: data.profile.nickname,
-                            avatarUrl: data.profile.avatarUrl,
-                            userId: data.profile.userId,
-                            userType: data.profile.userType,
-                        };
-                    });
-                    if (!sessionStorage.uid) {
-                        sessionStorage.uid = encode(data.profile.userId, "liuxu");
-                    }
-                }
-                console.log(data.code, data.profile);
-            });
-        } catch (err) {
-            console.log(err);
-        }
+        api_login_status().then((data) => {
+            if (data && data.code === 200) {
+                this.setState(() => {
+                    return {
+                        userName: data.profile.nickname,
+                        avatarUrl: data.profile.avatarUrl,
+                        userId: data.profile.userId,
+                        userType: data.profile.userType,
+                    };
+                });
+                if (!sessionStorage.uid) sessionStorage.uid = encode(data.profile.userId, "liuxu");
+            }
+            console.log("home获取用户信息", data);
+        });
     };
     componentDidMount() {
         // 发布订阅-是否显示登录窗口
@@ -53,14 +47,9 @@ export default class Home extends Component {
         });
         // 获取用户信息
         this.getUser();
-        // 获取用户信息,歌单,收藏,mv,dj数量
-        api_user_subcount().then((data) => {
-            console.log(data);
-        });
     }
     openColor = () => {
         console.log("打开全局背景颜色视窗");
-        document.body.style.setProperty("--themeColor", "pink");
     };
     render() {
         const routerList = this.props.childrens;

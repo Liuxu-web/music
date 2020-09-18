@@ -1,4 +1,14 @@
 import { get } from "./axios";
+// 获取cookie
+function getCookie(cookieStr) {
+    const obj = {};
+    let arr = cookieStr.split("; ");
+    arr.forEach(function (item) {
+        let newArr = item.split("=");
+        obj[newArr[0]] = newArr[1];
+    });
+    return obj;
+}
 
 // 注册账号-修改密码
 export async function api_sign_reset(phone, password, captcha, nickname) {
@@ -38,10 +48,14 @@ export async function api_logout() {
 }
 // 获取登录状态
 export async function api_login_status() {
-    try {
-        const data = await get(`/api/login/status&timestamp=${+new Date()}`);
+    const cookie = getCookie(document.cookie);
+    console.log("cookie", cookie);
+    if (cookie.MUSIC_U && cookie.__csrf && cookie.__remember_me) {
+        const data = await get(`/api/login/status?timestamp=${+new Date()}`);
         return data;
-    } catch (err) {}
+    } else {
+        return false;
+    }
 }
 // 获取用户详情 参数用户uid
 export async function api_user_detail(id) {

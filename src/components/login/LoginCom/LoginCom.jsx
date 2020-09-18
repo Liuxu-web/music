@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import pubsub from "pubsub-js";
 import md5 from "md5";
 import { isPhone, verify } from "../../../utils";
-import "./LoginCom.css";
+import "./LoginCom.less";
 import Prompt from "../../prompt/Prompt";
 
 export default class LoginCom extends Component {
