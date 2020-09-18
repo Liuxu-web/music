@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Router from "../routers/Router";
 import pubsub from "pubsub-js";
-import "./less/Home.less";
+import "./less/BHome.less";
+
 import AudioPlayer from "../components/audioPlayer/AudioPlayer";
 import NavSidebar from "../components/navSidebar/NavSidebar";
 import Login from "../components/login/Login";
@@ -20,6 +21,7 @@ export default class Home extends Component {
             userType: 0,
         };
     }
+
     // 获取用户信息
     getUser = () => {
         api_login_status().then((data) => {
@@ -50,6 +52,7 @@ export default class Home extends Component {
     }
     openColor = () => {
         console.log("打开全局背景颜色视窗");
+        
     };
     render() {
         const routerList = this.props.childrens;
@@ -84,7 +87,6 @@ export default class Home extends Component {
                             <li className="iconfont icon-pifu" onClick={this.openColor} />
                             <li className="iconfont icon-youxiang1"></li>
                             <li className="iconfont icon-shezhi"></li>
-                            <li style={{ borderLeft: "2px solid #a82828", padding: "0" }}></li>
                             <li className="iconfont icon-zuixiaohua"></li>
                             <li className="iconfont icon-chuangkou" onClick={fullScreen} />
                             <li
