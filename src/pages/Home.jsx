@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Router from "../routers/Router";
 import pubsub from "pubsub-js";
-import "./less/Home.css";
+import "./less/Home.less";
 import AudioPlayer from "../components/audioPlayer/AudioPlayer";
 import NavSidebar from "../components/navSidebar/NavSidebar";
 import Login from "../components/login/Login";
 import { api_user_subcount, api_login_status } from "../utils/api";
+import { fullScreen } from "../utils";
 import { encode } from "jwt-simple";
 
 export default class Home extends Component {
@@ -19,46 +20,28 @@ export default class Home extends Component {
             userType: 0,
         };
     }
-    // 切换全屏
-    fullScreen = () => {
-        const docElm = document.documentElement;
-        const fullhalf =
-            document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen;
-        console.log(fullhalf);
-        if (fullhalf) {
-            //W3C
-            if (document.exitFullscreen) document.exitFullscreen();
-            //FireFox
-            else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
-            //Chrome等
-            else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
-        } else {
-            if (docElm.requestFullscreen) docElm.requestFullscreen();
-            //FireFox
-            else if (docElm.mozRequestFullScreen) docElm.mozRequestFullScreen();
-            //Chrome等
-            else if (docElm.webkitRequestFullScreen) docElm.webkitRequestFullScreen();
-        }
-    };
-    // 获取
+    // 获取用户信息
     getUser = () => {
-        // 解除缓存 &timestamp=${+new Date()}
-        api_login_status().then(({ code, profile }) => {
-            if (code === 200) {
-                this.setState(() => {
-                    return {
-                        userName: profile.nickname,
-                        avatarUrl: profile.avatarUrl,
-                        userId: profile.userId,
-                        userType: profile.userType,
-                    };
-                });
-                if (!localStorage.uid) {
-                    localStorage.uid = encode(profile.userId, "liuxu");
+        try {
+            api_login_status().then((data) => {
+                if (data.code === 200) {
+                    this.setState(() => {
+                        return {
+                            userName: data.profile.nickname,
+                            avatarUrl: data.profile.avatarUrl,
+                            userId: data.profile.userId,
+                            userType: data.profile.userType,
+                        };
+                    });
+                    if (!sessionStorage.uid) {
+                        sessionStorage.uid = encode(data.profile.userId, "liuxu");
+                    }
                 }
-            }
-            console.log(code, profile);
-        });
+                console.log(data.code, data.profile);
+            });
+        } catch (err) {
+            console.log(err);
+        }
     };
     componentDidMount() {
         // 发布订阅-是否显示登录窗口
@@ -68,12 +51,17 @@ export default class Home extends Component {
                 if (content) this.getUser();
             });
         });
+        // 获取用户信息
         this.getUser();
         // 获取用户信息,歌单,收藏,mv,dj数量
         api_user_subcount().then((data) => {
             console.log(data);
         });
     }
+    openColor = () => {
+        console.log("打开全局背景颜色视窗");
+        document.body.style.setProperty("--themeColor", "pink");
+    };
     render() {
         const routerList = this.props.childrens;
         const { avatarUrl, userName, isShow } = this.state;
@@ -104,12 +92,12 @@ export default class Home extends Component {
                                 {userName}&nbsp;<i className="iconfont icon-jiantouxia"></i>
                             </li>
                             <li>开通VIP</li>
-                            <li className="iconfont icon-pifu"></li>
+                            <li className="iconfont icon-pifu" onClick={this.openColor} />
                             <li className="iconfont icon-youxiang1"></li>
                             <li className="iconfont icon-shezhi"></li>
                             <li style={{ borderLeft: "2px solid #a82828", padding: "0" }}></li>
                             <li className="iconfont icon-zuixiaohua"></li>
-                            <li className="iconfont icon-chuangkou" onClick={this.fullScreen} />
+                            <li className="iconfont icon-chuangkou" onClick={fullScreen} />
                             <li
                                 className="iconfont icon-guanbi"
                                 onClick={() => window.close()}

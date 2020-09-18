@@ -38,8 +38,10 @@ export async function api_logout() {
 }
 // 获取登录状态
 export async function api_login_status() {
-    const data = await get("/api/login/status");
-    return data;
+    try {
+        const data = await get(`/api/login/status&timestamp=${+new Date()}`);
+        return data;
+    } catch (err) {}
 }
 // 获取用户详情 参数用户uid
 export async function api_user_detail(id) {

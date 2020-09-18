@@ -30,3 +30,23 @@ export function verify(hint) {
         );
     }
 }
+// 切换全屏
+export function fullScreen() {
+    const docElm = document.documentElement;
+    const fullhalf =
+        document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen;
+    if (fullhalf) {
+        //W3C
+        if (document.exitFullscreen) document.exitFullscreen();
+        //FireFox
+        else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+        //Chrome等
+        else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+    } else {
+        if (docElm.requestFullscreen) docElm.requestFullscreen();
+        //FireFox
+        else if (docElm.mozRequestFullScreen) docElm.mozRequestFullScreen();
+        //Chrome等
+        else if (docElm.webkitRequestFullScreen) docElm.webkitRequestFullScreen();
+    }
+}

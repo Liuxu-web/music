@@ -104,8 +104,7 @@ export default class AudioPlayer extends Component {
         this.audio.loop = true;
     };
     componentDidMount() {
-        this.audio.src =
-            "https://isure.stream.qqmusic.qq.com/C400004OZAE22YnVrF.m4a?guid=4671197247&vkey=CD6925D8E27CAA852289E91F8272C5CA0A5CF9FDAC217B059B3BBEE0BC1B4FC29E93AF5AB163DCE13CAF234770C12620D2922567FC3E6FE5&uin=0&fromtag=66";
+        this.audio.src = require("../../assets/冻结.mp3");
         this.audio.playbackRate = 1;
         if (localStorage.volume_width) {
             this.audio.volume = "0." + parseInt(localStorage.volume_width);

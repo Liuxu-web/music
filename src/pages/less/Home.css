@@ -6,6 +6,13 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.Home .confirm {
+  line-height: 40px;
+  background-color: var(--themeColor);
+}
+.Home > header {
+  --themeColor: #0ff;
+}
 .Home > header {
   border-bottom: 2px solid #c62f2f;
   width: 100%;
