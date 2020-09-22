@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import bannerCreator from "../../redux/actionCreator/banner";
+import bannerCreator from "../../../redux/actionCreator/banner";
 
 class Banner extends Component {
     constructor(props) {
@@ -114,7 +114,11 @@ class Banner extends Component {
         document.removeEventListener("visibilitychange", this.visibilityState);
     }
     link = (url) => {
-        return url ? <a href={url} rel="noopener noreferrer" target="_blank"> </a> : null;
+        return url ? (
+            <a href={url} rel="noopener noreferrer" target="_blank">
+                {" "}
+            </a>
+        ) : null;
     };
     render() {
         const { dir } = this.state;
@@ -131,7 +135,7 @@ class Banner extends Component {
                             src={
                                 banner[index]
                                     ? banner[index].imageUrl
-                                    : require("../../assets/lazy.gif")
+                                    : require("../../../assets/lazy.gif")
                             }
                             alt={banner[index] ? banner[index].typeTitle : ""}
                         />

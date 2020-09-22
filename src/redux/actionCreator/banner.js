@@ -1,5 +1,4 @@
-const { GET_BANNER } = require("../actionType/banner");
-
+import {GET_BANNER} from "../actionType/banner" 
 function actionBanner(payload) {
     return {
         type: GET_BANNER,

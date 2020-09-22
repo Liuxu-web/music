@@ -50,6 +50,7 @@ export default class Home extends Component {
         // 获取用户信息
         this.getUser();
     }
+    // 玩具
     openColor = () => {
         const uid = decode(sessionStorage.uid, "liuxu");
         this.$get(`/api/user/playlist?uid=${uid}`).then((data) => {
@@ -59,6 +60,7 @@ export default class Home extends Component {
             });
         });
     };
+
     render() {
         const routerList = this.props.childrens;
         const { avatarUrl, userName, isShow } = this.state;
@@ -70,9 +72,15 @@ export default class Home extends Component {
                         <div className="logo" />
                         <div className="n-lf">
                             <div className="btn">
-                                <button className="iconfont icon-jiantouzuo1"></button>
+                                <button
+                                    className="iconfont icon-jiantouzuo1"
+                                    onClick={() => this.props.history.go(-1)}
+                                />
                                 <span></span>
-                                <button className="iconfont icon-jiantouyou"></button>
+                                <button
+                                    className="iconfont icon-jiantouyou"
+                                    onClick={() => this.props.history.go(1)}
+                                />
                             </div>
                             <input type="text" placeholder="搜索音乐，视频，歌词，电台" />
                             <span className="iconfont icon-sousuo"></span>

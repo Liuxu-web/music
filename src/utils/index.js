@@ -50,3 +50,16 @@ export function fullScreen() {
         else if (docElm.webkitRequestFullScreen) docElm.webkitRequestFullScreen();
     }
 }
+// 超过5位数,改成****万
+export function changeNum(num) {
+    let number = num.toString();
+    if (number.length > 5) {
+        number = number.split("").reverse();
+        number.splice(4, 0, ".");
+        number = number.reverse().join("");
+        number = number.substr(0, number.indexOf(".") + 0);
+        return number + "万";
+    } else {
+        return number;
+    }
+}

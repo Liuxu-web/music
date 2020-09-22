@@ -67,3 +67,17 @@ export async function api_user_subcount() {
     const data = await get(`/api/user/subcount`);
     return data;
 }
+// 获取歌单详情
+// 说明 : 歌单能看到歌单名字, 但看不到具体歌单内容 , 调用此接口 , 传入歌单 id, 可 以获取对应歌单内的所有的音乐(未登录状态只能获取不完整的歌单,登录后是完整的)
+export async function api_playlist_detail(id) {
+    const data = await get(`/api/playlist/detail?id=${id}`);
+    return data;
+}
+// 推荐歌单
+// 说明 : 调用此接口 , 可获取推荐歌单
+export async function api_personalized(list = 30) {
+    const data = await get(`/api/personalized`, {
+        limit: list,
+    });
+    return data;
+}
