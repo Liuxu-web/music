@@ -11,8 +11,8 @@ export default {
     GET_RECOMMEND_THE_PLAYLIST() {
         return (dispatch) => {
             api_personalized(10).then((data) => {
-                const { code, hasTaste, result } = data;
-                if (code === 200 && hasTaste) dispatch(actionRecommendThePlaylist(result));
+                const { code, result } = data;
+                if (code === 200) dispatch(actionRecommendThePlaylist(result));
                 else console.log("服务器瞌睡了");
                 console.log(this.props);
             });

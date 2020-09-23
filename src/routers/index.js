@@ -8,15 +8,15 @@ context.keys().forEach((filename) => {
 
 export default [
     {
-        // 404
-        path: "/error",
-        component: subassembly.Err,
-    },
-    {
         // 首页
         path: "/",
         component: subassembly.Home,
         childrens: [
+            {
+                // 歌单详情-根据歌单id展示详细歌单内容
+                path: "/SongListDetails/:id",
+                component: subassembly.SongListDetails,
+            },
             {
                 // 私人FM
                 path: "/personalfm",

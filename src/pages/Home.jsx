@@ -69,7 +69,7 @@ export default class Home extends Component {
                 {isShow ? <Login /> : null}
                 <header>
                     <div className="h-lf">
-                        <div className="logo" />
+                        <div className="logo"  onClick={()=>this.props.history.push("/Main")}/>
                         <div className="n-lf">
                             <div className="btn">
                                 <button
