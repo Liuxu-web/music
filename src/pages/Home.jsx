@@ -36,7 +36,7 @@ export default class Home extends Component {
                 });
                 if (!sessionStorage.uid) sessionStorage.uid = encode(data.profile.userId, "liuxu");
             }
-            console.log("home获取用户信息", data);
+            // console.log("home获取用户信息", data);
         });
     };
     componentDidMount() {

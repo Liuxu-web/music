@@ -7,40 +7,49 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import SongListDetailsCreator from "../redux/actionCreator/SongListDetails.js";
-import { api_playlist_detail } from "../utils/api";
+import { getTheDate } from "../utils";
 import "./less/SongListDetails.less";
 
 class SongListDetails extends Component {
     componentDidMount() {
-        api_playlist_detail(this.props.match.params.id).then((data) => {
-            console.log(data);
-        });
+        this.props.GET_SONG_LIST_DETALIS.apply(this);
     }
     render() {
         return (
             <div className="SongListDetails">
-                <div className="title">
-                    <img src={require("../assets/lazy.gif")} alt="" />
-                    <div className="information">
-                        <h1>【回到日本泡沫时代】FM调频广播83.5</h1>
-                        {/* 用户头像-名字-歌单创建时间 */}
-                        <div className="user">
-                            <img src="" alt="" />
-                            <p></p>
-                            <span></span>
+                <div className="sld_header_box">
+                    <div className="sld_hedaer">
+                        {/* 详情背景图片 */}
+                        <div className="details_img">
+                            <img src={require("../assets/lazy.gif")} alt="1" />
                         </div>
-                        {/* 播放-收藏-分享-全部下载 */}
-                        <div>
-                            <div className="btn">全部播放</div>
-                            <button>收藏</button>
-                            <button>分享</button>
-                            <button>下载全部</button>
-                        </div>
-                        {/* 标签 */}
-                        <div className="tag">标签:阿萨德/阿萨德/阿萨德</div>
-                        {/* 简介 */}
-                        <div className="brief">
-                            简介:如同穿梭在恍惚的时空隧道,透过蓝白条的银色,以及明亮的吉他弦,伴随着抓耳的旋律,Clty-Pop萱堂积极向上的雷管就像是肥皂宝宝的先例空虚,往西的美好景象在清空类日下,随着太阳的热量逐渐蒸发掉
+                        {/* 详情介绍 */}
+                        <div className="details_text">
+                            {/* 歌单标题 */}
+                            <div className="details_title">[日系喜人定制]最懂你的日系推荐 每日更新35首</div>
+                            {/* 歌单用户 */}
+                            <div className="details_user">
+                                <img src="http://p1.music.126.net/zkWURDiavZGoPq-sVTC-uQ==/109951165165281866.jpg" alt="" />
+                                <div className="name">网易云音乐</div>
+                                <div className="time">{getTheDate(1601207987060)}创建</div>
+                            </div>
+                            {/* 按钮 */}
+                            <div className="details_button">
+                                <div className="all_play_button">
+                                    <button>全部播放</button>
+                                    <button />
+                                </div>
+                                <button>收藏(2)</button>
+                                <button>分享(2)</button>
+                                <button>下载全部</button>
+                            </div>
+                            {/* 介绍 */}
+                            <div className="details_introduce">
+                                <div className="label">
+                                    标签: <a href="JavaScript:;">添加标签</a>
+                                </div>
+                                <div className="introduce">简介:</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,10 +60,12 @@ class SongListDetails extends Component {
 
 //redux
 const mapStateToProps = (state) => {
-    console.log(state);
-    return {};
+    return {
+        SongList: state.SongListDetails,
+    };
 };
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(SongListDetailsCreator, dispatch);
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(SongListDetails);

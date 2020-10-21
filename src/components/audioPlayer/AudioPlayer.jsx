@@ -84,9 +84,7 @@ export default class AudioPlayer extends Component {
             (prevState) => {
                 return {
                     isMute: !prevState.isMute,
-                    muteIconfont: !prevState.isMute
-                        ? "iconfont icon-jingyin"
-                        : "iconfont icon-Volumeyinliang",
+                    muteIconfont: !prevState.isMute ? "iconfont icon-jingyin" : "iconfont icon-Volumeyinliang",
                     volume_width: this.history(this.state.isMute),
                 };
             },
@@ -104,7 +102,8 @@ export default class AudioPlayer extends Component {
         this.audio.loop = true;
     };
     componentDidMount() {
-        this.audio.src = "https://ws.stream.qqmusic.qq.com/C400004OZAE22YnVrF.m4a?guid=3116965006&vkey=A4EEB4B3B75D813A8405D2B76E091BC8BF540071A80933FD4A2FFA40EFE8B71C3957F698FD6BC7ABBED9FBE7DCBC5043B2C2D8B0FA8B0604&uin=2873&fromtag=66";
+        this.audio.src =
+            "https://ws.stream.qqmusic.qq.com/C400003pZAGe4Q2w81.m4a?guid=3116965006&vkey=D1E81C9EA373EF7EA3399FD2784072098D0DD271AF9FB6C289A311EC944F142B815893C4AEE4074FE25B0C12DD925AB8608D7592550E64DA&uin=0&fromtag=66";
         this.audio.playbackRate = 1;
         if (localStorage.volume_width) {
             this.audio.volume = "0." + parseInt(localStorage.volume_width);
@@ -229,9 +228,7 @@ export default class AudioPlayer extends Component {
                     (prevState) => {
                         return {
                             isMute: !prevState.isMute,
-                            muteIconfont: !prevState.isMute
-                                ? "iconfont icon-jingyin"
-                                : "iconfont icon-Volumeyinliang",
+                            muteIconfont: !prevState.isMute ? "iconfont icon-jingyin" : "iconfont icon-Volumeyinliang",
                             volume_width: this.history(this.state.isMute),
                         };
                     },
@@ -284,24 +281,10 @@ export default class AudioPlayer extends Component {
                 {/* 播放进度 */}
                 <div className="progress_box">
                     <div className="musicTime">{this.state.presentTime}</div>
-                    <div
-                        className="fansile"
-                        onMouseLeave={this.MouseUp}
-                        onMouseUp={this.MouseUp}
-                        onMouseMove={this.fansileMouseMove}
-                    >
-                        <div
-                            className="sumProgress"
-                            ref={(e) => (this.sumProgress = e)}
-                            onClick={this.sumProgressClick}
-                        ></div>
+                    <div className="fansile" onMouseLeave={this.MouseUp} onMouseUp={this.MouseUp} onMouseMove={this.fansileMouseMove}>
+                        <div className="sumProgress" ref={(e) => (this.sumProgress = e)} onClick={this.sumProgressClick}></div>
                         <div className="progress" style={{ width: this.state.width }}>
-                            <i
-                                className="dot"
-                                ref={(e) => (this.dot = e)}
-                                onMouseDown={this.dotMouseDown}
-                                onMouseUp={this.MouseUp}
-                            ></i>
+                            <i className="dot" ref={(e) => (this.dot = e)} onMouseDown={this.dotMouseDown} onMouseUp={this.MouseUp}></i>
                         </div>
                     </div>
                     <div className="musicTime">{this.state.totalTime}</div>
@@ -309,11 +292,7 @@ export default class AudioPlayer extends Component {
                 {/* 其他控制 */}
                 <div className="controlTwo">
                     <div className="volumeBox">
-                        <i
-                            target={"静音"}
-                            className={this.state.muteIconfont}
-                            onClick={this.mute}
-                        />
+                        <i target={"静音"} className={this.state.muteIconfont} onClick={this.mute} />
                         <div className="volume">
                             <div
                                 className="volume-fansile"
@@ -326,10 +305,7 @@ export default class AudioPlayer extends Component {
                                     ref={(e) => (this.volume_sumProgress = e)}
                                     onClick={this.volume_sumProgressClick}
                                 ></div>
-                                <div
-                                    className="volume-progress"
-                                    style={{ width: this.state.volume_width }}
-                                >
+                                <div className="volume-progress" style={{ width: this.state.volume_width }}>
                                     <i
                                         className="volume-dot"
                                         ref={(e) => (this.volume_dot = e)}
@@ -340,10 +316,7 @@ export default class AudioPlayer extends Component {
                             </div>
                         </div>
                     </div>
-                    <button
-                        className="iconfont icon-danquxunhuan1"
-                        onClick={this.playPattern}
-                    ></button>
+                    <button className="iconfont icon-danquxunhuan1" onClick={this.playPattern}></button>
                     <button>标准</button>
                     <button>词</button>
                 </div>

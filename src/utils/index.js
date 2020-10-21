@@ -33,8 +33,7 @@ export function verify(hint) {
 // 切换全屏
 export function fullScreen() {
     const docElm = document.documentElement;
-    const fullhalf =
-        document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen;
+    const fullhalf = document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen;
     if (fullhalf) {
         //W3C
         if (document.exitFullscreen) document.exitFullscreen();
@@ -61,5 +60,23 @@ export function changeNum(num) {
         return number + "万";
     } else {
         return number;
+    }
+}
+// 根据时间戳转换为时间
+export function getTheDate(time, pattern = true, spaceMark) {
+    if (typeof pattern !== "boolean") {
+        spaceMark = pattern;
+        pattern = true;
+    }
+    const S = spaceMark || "-",
+        TIME = typeof time === "number" ? new Date(time) : time,
+        YEAR = TIME.getFullYear(),
+        MONTH = supplement(TIME.getMonth() + 1),
+        DAY = supplement(TIME.getDate());
+    switch (pattern) {
+        case true:
+            return YEAR + S + MONTH + S + DAY;
+        default:
+            return YEAR + "年" + MONTH + "月" + DAY + "日";
     }
 }

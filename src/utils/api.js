@@ -49,7 +49,7 @@ export async function api_logout() {
 // 获取登录状态
 export async function api_login_status() {
     const cookie = getCookie(document.cookie);
-    console.log("cookie", cookie);
+    // console.log("cookie", cookie);
     if (cookie.MUSIC_U && cookie.__csrf && cookie.__remember_me) {
         const data = await get(`/api/login/status?timestamp=${+new Date()}`);
         return data;
