@@ -3,6 +3,10 @@ import routerList from "./routers";
 import Router from "./routers/Router";
 
 class App extends Component {
+  componentDidMount() {
+    console.log('新的修改');
+  }
+
   render() {
     return (
       <React.Fragment>
